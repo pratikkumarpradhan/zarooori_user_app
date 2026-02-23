@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "873539215769",
+    "project_id": "aswack-86a20",
+    "storage_bucket": "aswack-86a20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873539215769:android:2932d14280436d82653308",
+        "android_client_info": {
+          "package_name": "com.avdhootsolutions.aswack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESHOJixMslInnkgWZUgbvg9loxhRNi6c"
+        },
+        {
+          "current_key": "AIzaSyDFSeuW9gpg3CuYzm0VQ0AqEbbxkxiWMm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873539215769:android:9d49ed46c1d5a0d5653308",
+        "android_client_info": {
+          "package_name": "com.avdhootsolutions.aswack_shopkeeper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESHOJixMslInnkgWZUgbvg9loxhRNi6c"
+        },
+        {
+          "current_key": "AIzaSyDFSeuW9gpg3CuYzm0VQ0AqEbbxkxiWMm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873539215769:android:4b63ec66bf39105a653308",
+        "android_client_info": {
+          "package_name": "com.example.zarooori_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESHOJixMslInnkgWZUgbvg9loxhRNi6c"
+        },
+        {
+          "current_key": "AIzaSyDFSeuW9gpg3CuYzm0VQ0AqEbbxkxiWMm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873539215769:android:5d0bda8164e567e5653308",
+        "android_client_info": {
+          "package_name": "com.examptter_module.host"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESHOJixMslInnkgWZUgbvg9loxhRNi6c"
+        },
+        {
+          "current_key": "AIzaSyDFSeuW9gpg3CuYzm0VQ0AqEbbxkxiWMm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+class AppRoutes {
+  static const splash = '/';
+  static const login = '/login';
+  static const register = '/register';
+  static const home = '/home';
+  static const sos = '/sos';
+  static const bookRide = '/book_ride';
+  static const sellVehicle = '/sell_vehicle';
+  static const buyVehicle = '/buy_vehicle';
+  static const garage = '/garage';
+  static const vehicleInsurance = '/vehicle_insurance';
+  static const emergency = '/emergency';
+  static const spareParts = '/spare_parts';
+  static const carAccessories = '/car_accessories';
+  static const heavyEquipment = '/heavy_equipment';
+  static const tyreServices = '/tyre_services';
+  static const breakDown = '/break_down';
+  static const rentCar = '/rent_car';
+  static const courier = '/courier';
+  static const profile = '/profile';
+  static const aboutUs = '/about_us';
+  static const wishList = '/wish_list';
+  static const bookingList = '/booking_list';
+  static const reminderList = '/reminder_list';
+  static const orderList = '/order_list';
+  static const chatList = '/chat_list';
+  static const addRfq = '/add_rfq';
+  static const notificationList = '/notification_list';
+  static const webView = '/web_view';
+  static const pageDetail = '/page_detail';
+  static const purchasedPackages = '/purchased_packages';
+  static const categoryOffers = '/category_offers';
+  static const searchVehicle = '/search_vehicle';
+}
