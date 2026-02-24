@@ -323,7 +323,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const SizedBox(height: 60),
+                          //const SizedBox(height: 60),
                           Container(
                             padding: const EdgeInsets.all(20),
                             decoration: PremiumDecorations.card(

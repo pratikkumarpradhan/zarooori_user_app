@@ -8,7 +8,7 @@ import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
 import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
 import 'package:zarooori_user/drawer_menu/about_us/about_us_screen.dart';
 import 'package:zarooori_user/drawer_menu/bookings_list/bookings_list_screen.dart';
-import 'package:zarooori_user/drawer_menu/contact_us/rfq/add_rfq_screen.dart';
+import 'package:zarooori_user/drawer_menu/rfq/add_rfq_screen.dart';
 import 'package:zarooori_user/drawer_menu/orders/orders_list_screen.dart';
 import 'package:zarooori_user/drawer_menu/page_detail_screen.dart';
 import 'package:zarooori_user/drawer_menu/profile/profile_bubble_screen.dart';

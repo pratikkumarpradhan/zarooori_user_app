@@ -352,11 +352,7 @@ class ServiceGridWidget extends StatelessWidget {
             color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
-          Container(
-            height: 0.5,
-            color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
-            margin: const EdgeInsets.symmetric(vertical: 12),
-          ),
+      
           _ServiceTileWide(
             image: 'assets/images/courier_service.png',
             label: 'Courier Services',

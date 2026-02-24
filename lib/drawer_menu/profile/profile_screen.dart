@@ -156,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const SizedBox(height: 60),
+                         // const SizedBox(height: 60),
                           _buildProfileHeader(initials, fullName),
                           const SizedBox(height: 18),
                           Container(
