@@ -338,7 +338,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigateAfterSplash() async {
-    await Future.delayed(const Duration(milliseconds: 7000));
+    await Future.delayed(const Duration(milliseconds: 4000));
     if (!mounted) return;
 
     try {
@@ -478,6 +478,11 @@ class _SplashScreenState extends State<SplashScreen>
                             height: 150,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+      color: Colors.black54.withOpacity(0.25), // border color
+      width: 2, // border thickness
+    ),
+
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withValues(alpha: 0.08),
@@ -499,7 +504,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 child: Image.asset(
                                   'assets/images/transparent.png',
                                   fit: BoxFit
-                                      .contain, // ya BoxFit.cover if you want more zoom
+                                      .cover, // ya BoxFit.cover if you want more zoom
                                 ),
                               ),
                             ),
@@ -525,68 +530,132 @@ class _SplashScreenState extends State<SplashScreen>
                               ),
                             ],
                           ),
-                          const SizedBox(height: 28),
-                          // Video card (asset video) – plays below without errors on any device
-                          Container(
-                            width: double.infinity,
-                            height: 260,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                  spreadRadius: 0,
+                          // ── TYRE SLIDING + LOADING ──
+                          const SizedBox(
+                            height: 32,
+                          ), // space before the animation area
+
+                          SizedBox(
+                            height:
+                                160, // adjust height of this container (tyre + some padding)
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Optional: subtle track / road line effect (visual cue that it's moving)
+                                Positioned(
+                                  bottom: 30,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 4,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.grey.withOpacity(0.1),
+                                          Colors.grey.withOpacity(0.4),
+                                          Colors.grey.withOpacity(0.1),
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
                                 ),
-                                BoxShadow(
-                                  color: const Color(
-                                    0xFFF57C00,
-                                  ).withValues(alpha: 0.15),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                  spreadRadius: 0,
+
+                                // Sliding tyre
+                                AnimatedBuilder(
+                                  animation: _progressController,
+                                  builder: (context, child) {
+                                    // Slide from ~10% left to ~90% right
+                                    final progress = _progressWidth.value.clamp(
+                                      0.0,
+                                      1.0,
+                                    );
+                                    final leftOffset =
+                                        -50 +
+                                        (MediaQuery.of(context).size.width -
+                                                140 -
+                                                50) *
+                                            progress;
+
+                                    return Positioned(
+                                      left: leftOffset,
+                                      child: Transform.rotate(
+                                        angle:
+                                            _progressController.value *
+                                            10 *
+                                            3.1416,
+                                        // 🔥 multiplier adjust for faster/slower rotation
+                                        child: child!,
+                                      ),
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/splash2.png',
+                                    width: 140,
+                                    height: 140,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ],
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: _buildVideoCard(),
-                            ),
                           ),
+
                           const SizedBox(height: 16),
-                          // Loading indicator (moved just below video card)
+
+                          // // Progress bar + text (centered below the sliding area)
+                          // AnimatedBuilder(
+                          //   animation: _progressController,
+                          //   builder: (context, child) {
+                          //     return Column(
+                          //       mainAxisSize: MainAxisSize.min,
+                          //       children: [
+                          //         SizedBox(
+                          //           width: 300,           // fixed width so it looks balanced
+                          //           child: ClipRRect(
+                          //             borderRadius: BorderRadius.circular(8),
+                          //             child: LinearProgressIndicator(
+                          //               value: _progressWidth.value,
+                          //               backgroundColor: Colors.black.withOpacity(0.12),
+                          //               valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFF57C00)),
+                          //               minHeight: 8,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         const SizedBox(height: 12),
+                          //         // Text(
+                          //         //   'Loading...',
+                          //         //   style: AppTextStyles.textView(
+                          //         //     size: 14,
+                          //         //     color: AppColors.black.withOpacity(0.75),
+                          //         //     //fontWeight: FontWeight.w500,
+                          //         //   ),
+                          //         // ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
+                          // Optional: small centered status text (very subtle)
                           AnimatedBuilder(
                             animation: _progressController,
-                            builder: (context, child) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(6),
-                                    child: LinearProgressIndicator(
-                                      value: _progressWidth.value,
-                                      backgroundColor: Colors.black.withValues(
-                                        alpha: 0.1,
-                                      ),
-                                      valueColor:
-                                          const AlwaysStoppedAnimation<Color>(
-                                            Color(0xFFF57C00),
-                                          ),
-                                      minHeight: 4,
-                                    ),
+                            builder: (context, _) {
+                              final progress = _progressWidth.value;
+                              String status = progress < 0.3
+                                  ? 'Preparing...'
+                                  : progress < 0.7
+                                  ? 'Rolling in...'
+                                  : 'Almost there...';
+
+                              return Opacity(
+                                opacity: 0.7,
+                                child: Text(
+                                  status,
+                                  style: GoogleFonts.openSans(
+                                    fontSize: 14,
+                                    color: AppColors.black.withOpacity(0.65),
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 0.4,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Loading...',
-                                    style: AppTextStyles.textView(
-                                      size: 12,
-                                      color: AppColors.black.withValues(
-                                        alpha: 0.65,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               );
                             },
                           ),

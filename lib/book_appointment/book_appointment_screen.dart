@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:zarooori_user/api_services/bookings_firestore.dart';
 import 'package:zarooori_user/api_services/vehicle_insurance_api.dart';
 import 'package:zarooori_user/authentication/local/local_auth.dart';
@@ -118,7 +119,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           icon: const Icon(Icons.arrow_back, color: AppColors.black),
           onPressed: () => Get.back(),
         ),
-        title: Text('Book Appointment', style: AppTextStyles.textView(size: 18, color: AppColors.black)),
+        title: Text('Book Appointment', style: GoogleFonts.openSans(fontSize:  18, color: AppColors.black)),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: AppColors.purple700))
