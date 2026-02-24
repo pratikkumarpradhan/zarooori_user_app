@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class RoleSelection extends StatelessWidget {
   const RoleSelection({super.key});
 
@@ -54,7 +53,7 @@ class RoleSelection extends StatelessWidget {
           children: [
             gradientButton(
               onPressed: () {
-               // Get.to(() => UserLoginScreen());
+                // Get.to(() => UserLoginScreen());
               },
               label: "User",
               icon: Icons.person,
@@ -66,7 +65,7 @@ class RoleSelection extends StatelessWidget {
                 // Get.to(() => DriverDashboardScreen(
                 //     // driverName: 'James',
                 //     ));
-              //  Get.to(() => DriverLoginPage());
+                //  Get.to(() => DriverLoginPage());
               },
               label: "Driver",
               icon: Icons.drive_eta,
