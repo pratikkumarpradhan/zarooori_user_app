@@ -7,7 +7,7 @@ class AppTextStyles {
 
   static const String _fontFamily = 'Poppins';
 
-  static TextStyle textView({double size = 12, Color color = AppColors.black}) =>
+  static TextStyle textView({double size = 12, Color color = AppColors.black, }) =>
       TextStyle(
         fontFamily: _fontFamily,
         fontWeight: FontWeight.w500,
