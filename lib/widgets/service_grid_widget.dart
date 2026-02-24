@@ -18,13 +18,12 @@ import 'package:zarooori_user/main_home_page/tyre_service/tyre_service_list_scre
 import 'package:zarooori_user/models/product_model.dart';
 import 'package:zarooori_user/widgets/vehicle_selection_screen.dart';
 
-
 /// Snappy navigation - instant feedback, no delay.
 void _nav(Widget Function() page) => Get.to(
-      page,
-      transition: Transition.cupertino,
-      duration: const Duration(milliseconds: 200),
-    );
+  page,
+  transition: Transition.cupertino,
+  duration: const Duration(milliseconds: 200),
+);
 
 class ServiceGridWidget extends StatelessWidget {
   const ServiceGridWidget({
@@ -64,11 +63,11 @@ class ServiceGridWidget extends StatelessWidget {
             ),
           ),
           Row(
-              children: [
-                Expanded(
-                  child: _ServiceTile(
-                    image: 'assets/images/sell_vehicle.png',
-                    label: 'Sell Vehicle',
+            children: [
+              Expanded(
+                child: _ServiceTile(
+                  image: 'assets/images/sell_vehicle.png',
+                  label: 'Sell Vehicle',
                   subText: 'Sell Your Vehicle Faster',
                   onTap: () async {
                     final id = await showVehicleSelectionSheetWithApi(
@@ -108,27 +107,46 @@ class ServiceGridWidget extends StatelessWidget {
             color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
+
+          /// Emergency Services Card
           _ServiceTileWide(
-              image: 'assets/images/emegency_service.png',
+            image: 'assets/images/emegency_service.png',
             label: 'Emergency Services',
             subText: 'Your Best Solution Where No One To Help You',
-            actionLabel: 'Book Ride',
             onTap: () async {
               final result = await showSubCategorySheetWithApi(
                 context,
                 title: 'What are you looking?',
                 mainCatId: '5',
               );
+
               if (result != null && context.mounted) {
                 final req = ProductRequest(
                   master_category_id: result['mainCatId'],
                   master_subcategory_id: result['subCatId'],
                   city_id: '0',
                 );
+
                 _nav(() => EmergencyServicesScreen(productRequest: req));
               }
             },
-            onAction: () => _nav(() => const RoleSelection()),
+            onAction: () async {
+              final result = await showSubCategorySheetWithApi(
+                context,
+                title: 'What are you looking?',
+                mainCatId: '5',
+              );
+
+              if (result != null && context.mounted) {
+                final req = ProductRequest(
+                  master_category_id: result['mainCatId'],
+                  master_subcategory_id: result['subCatId'],
+                  city_id: '0',
+                );
+
+                _nav(() => EmergencyServicesScreen(productRequest: req));
+              }
+            },
           ),
           Container(
             height: 0.5,
@@ -136,10 +154,10 @@ class ServiceGridWidget extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
           Row(
-              children: [
-                Expanded(
-                  child: _ServiceTile(
-                    image: 'assets/images/vehicle_insurance.png',
+            children: [
+              Expanded(
+                child: _ServiceTile(
+                  image: 'assets/images/vehicle_insurance.png',
                   label: 'Vehicle Insurance',
                   subText: 'Grab Your Best Insurance Deals',
                   onTap: () async {
@@ -161,8 +179,9 @@ class ServiceGridWidget extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 0.5,
+                height: 0.5,
                 color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+                margin: const EdgeInsets.symmetric(vertical: 12),
               ),
               Expanded(
                 child: _ServiceTile(
@@ -192,24 +211,98 @@ class ServiceGridWidget extends StatelessWidget {
             color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
+
+          /// Book Ride Card (Same Layout)
           _ServiceTileWide(
-              image: 'assets/images/courier_service.png',
-              label: 'Courier Services',
-              subText: 'Choose Your Delivery At Best Time And Rate',
-              onTap: () => _nav(() => const CourierServicesScreen()),
+            image: 'assets/images/cab_service.jpg',
+            label: 'Book Ride',
+            subText:
+                'For Riders & Drivers — Book or Offer Rides Anytime Anywhere',
+            actionLabel: 'Become Driver',
+            onTap: () => _nav(() => const RoleSelection()),
+            onAction: () => _nav(() => const RoleSelection()),
           ),
+
           Container(
             height: 0.5,
             color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: _ServiceTile(
+          //         image: 'assets/images/vehicle_insurance.png',
+          //         label: 'Vehicle Insurance',
+          //         subText: 'Grab Your Best Insurance Deals',
+          //         onTap: () async {
+          //           final id = await showVehicleSelectionSheetWithApi(
+          //             context,
+          //             title: 'What are you looking?',
+          //           );
+          //           if (id != null && id.isNotEmpty && context.mounted) {
+          //             final req = ProductRequest(
+          //               master_category_id: '4',
+          //               vehicle_category_id: id,
+          //               city_id: '0',
+          //             );
+          //             _nav(
+          //               () => VehicleInsuranceListScreen(productRequest: req),
+          //             );
+          //           }
+          //         },
+          //       ),
+          //     ),
+          //     Container(
+          //       width: 0.5,
+          //       color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+          //     ),
+          //     Expanded(
+          //       child: _ServiceTile(
+          //         image: 'assets/images/spare_parts.png',
+          //         label: 'Spare Parts',
+          //         subText: 'Choose Parts at Best Price Without Commission',
+          //         onTap: () async {
+          //           final id = await showVehicleSelectionSheetWithApi(
+          //             context,
+          //             title: 'What are you looking?',
+          //           );
+          //           if (id != null && id.isNotEmpty && context.mounted) {
+          //             final req = ProductRequest(
+          //               master_category_id: '6',
+          //               vehicle_category_id: id,
+          //               city_id: '0',
+          //             );
+          //             _nav(() => SparePartsListScreen(productRequest: req));
+          //           }
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // Container(
+          //   height: 0.5,
+          //   color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+          //   margin: const EdgeInsets.symmetric(vertical: 12),
+          // ),
+          // _ServiceTileWide(
+          //   image: 'assets/images/courier_service.png',
+          //   label: 'Courier Services',
+          //   subText: 'Choose Your Delivery At Best Time And Rate',
+          //   onTap: () => _nav(() => const CourierServicesScreen()),
+          // ),
+          // Container(
+          //   height: 0.5,
+          //   color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+          //   margin: const EdgeInsets.symmetric(vertical: 12),
+          // ),
           Row(
-              children: [
-                Expanded(
-                  child: _ServiceTile(
-                    image: 'assets/images/garage.png',
-                    label: 'Garage',
-                    subText: 'Choose Best Garage With The Correct Specality',
+            children: [
+              Expanded(
+                child: _ServiceTile(
+                  image: 'assets/images/garage.png',
+                  label: 'Garage',
+                  subText: 'Choose Best Garage With The Correct Specality',
                   onTap: () async {
                     final result = await showSubCategorySheetWithApi(
                       context,
@@ -259,11 +352,27 @@ class ServiceGridWidget extends StatelessWidget {
             color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
+          Container(
+            height: 0.5,
+            color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+            margin: const EdgeInsets.symmetric(vertical: 12),
+          ),
+          _ServiceTileWide(
+            image: 'assets/images/courier_service.png',
+            label: 'Courier Services',
+            subText: 'Choose Your Delivery At Best Time And Rate',
+            onTap: () => _nav(() => const CourierServicesScreen()),
+          ),
+          Container(
+            height: 0.5,
+            color: const Color(0xFFFFD54F).withValues(alpha: 0.5),
+            margin: const EdgeInsets.symmetric(vertical: 12),
+          ),
           Row(
-              children: [
-                Expanded(
-                  child: _ServiceTile(
-                    image: 'assets/images/heavy_equipments.png',
+            children: [
+              Expanded(
+                child: _ServiceTile(
+                  image: 'assets/images/heavy_equipments.png',
                   label: 'Heavy Equipments',
                   subText: 'Hire Heavy Equipments Direct From Dealers',
                   onTap: () async {
@@ -312,27 +421,27 @@ class ServiceGridWidget extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
           Row(
-              children: [
-                Expanded(
-                  child: _ServiceTile(
-                    image: 'assets/images/breakdown.png',
-                    label: 'Break Down Services',
-                    subText: '24/7 At Your Service',
-                    onTap: () async {
-                      final result = await showBreakdownSelectionSheet(
-                        context,
-                        title: 'What are you looking?',
+            children: [
+              Expanded(
+                child: _ServiceTile(
+                  image: 'assets/images/breakdown.png',
+                  label: 'Break Down Services',
+                  subText: '24/7 At Your Service',
+                  onTap: () async {
+                    final result = await showBreakdownSelectionSheet(
+                      context,
+                      title: 'What are you looking?',
+                    );
+                    if (result != null && context.mounted) {
+                      final req = ProductRequest(
+                        master_category_id: result['mainCatId'],
+                        master_subcategory_id: result['subCatId'],
+                        city_id: '0',
                       );
-                      if (result != null && context.mounted) {
-                        final req = ProductRequest(
-                          master_category_id: result['mainCatId'],
-                          master_subcategory_id: result['subCatId'],
-                          city_id: '0',
-                        );
-                        _nav(() => BreakDownScreen(productRequest: req));
-                      }
-                    },
-                  ),
+                      _nav(() => BreakDownScreen(productRequest: req));
+                    }
+                  },
+                ),
               ),
               Container(
                 width: 0.5,
