@@ -1,6 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:zarooori_user/drawer_menu/purchased_packages/purchased_packages_screen.dart';
+import 'package:zarooori_user/notification_service/notification_list_screen.dart';
 
 class HeaderWidget extends StatelessWidget {
   final String userName;
@@ -109,7 +114,7 @@ class HeaderWidget extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                       letterSpacing: 0.4,
+                      letterSpacing: 0.4,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -131,12 +136,31 @@ class HeaderWidget extends StatelessWidget {
             ),
 
             /// 🔔 💼 🌐 Glass Action Icons
-            glassIcon(Icons.notifications_outlined, onNotificationTap),
-            glassIcon(Icons.account_balance_wallet_outlined, () {}),
-            glassIcon(Icons.language, onLanguageTap),
+            glassIcon(
+              Icons.notifications_outlined,
+              () => Get.to(() => const NotificationListScreen()),
+            ),
+
+            glassIcon(
+              Icons.account_balance_wallet_outlined,
+              () => Get.to(() => const PurchasedPackagesScreen()),
+            ),
+
+            glassIcon(Icons.language, () => openWebsite()),
           ],
         ),
       ),
     );
+  }
+}
+
+Future<void> openWebsite() async {
+  final Uri url = Uri.parse('https://zarooori.com');
+
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication, // opens in browser
+  )) {
+    throw 'Could not launch $url';
   }
 }

@@ -49,7 +49,7 @@ class _SosFloatingButtonState extends State<SosFloatingButton>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('SOS sent to trusted contacts'),
+            content: Text('SOS sent successfully from server to your trusted one'),
             backgroundColor: Colors.green,
           ),
         );
