@@ -475,36 +475,36 @@ class _SplashScreenState extends State<SplashScreen>
                         children: [
                           // Logo / hero image – small card, image centred inside
                           Container(
-                            height: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-      color: Colors.black54.withOpacity(0.25), // border color
-      width: 2, // border thickness
-    ),
-
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.08),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 8),
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Colors.white.withValues(alpha: 0.6),
-                                  blurRadius: 0,
-                                  offset: const Offset(0, -2),
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
+                            height: 100,
+                            width: 250, // 👈 fixed width prevents layout jump
+                            alignment: Alignment.center,
+                            // decoration: BoxDecoration(
+                            //   borderRadius: BorderRadius.circular(20),
+                            //   border: Border.all(
+                            //     color: Colors.black54.withOpacity(0.25),
+                            //     width: 2,
+                            //   ),
+                            //   boxShadow: [
+                            //     BoxShadow(
+                            //       color: Colors.black.withValues(alpha: 0.08),
+                            //       blurRadius: 10,
+                            //       offset: const Offset(0, 8),
+                            //     ),
+                            //     BoxShadow(
+                            //       color: Colors.white.withValues(alpha: 0.6),
+                            //       offset: const Offset(0, -2),
+                            //     ),
+                            //   ],
+                            // ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: SizedBox.expand(
+                              child: Padding(
+                                padding: const EdgeInsets.all(
+                                  12,
+                                ), // 👈 spacing around logo
                                 child: Image.asset(
-                                  'assets/images/transparent.png',
-                                  fit: BoxFit
-                                      .cover, // ya BoxFit.cover if you want more zoom
+                                  'assets/images/app_icon.png',
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ),
