@@ -64,6 +64,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zarooori_user/Authentication/login_screen.dart';
 import 'package:zarooori_user/Authentication/register_screen.dart';
 import 'package:zarooori_user/main_home_page/home_screen/home_screen.dart';
+import 'package:zarooori_user/sos/sos_button.dart';
 import 'package:zarooori_user/sos/sos_screen.dart';
 import 'package:zarooori_user/splash_page/splash_screen.dart';
 import 'firebase_options.dart';
@@ -107,7 +108,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => const LoginScreen()),
         GetPage(name: '/register', page: () => const RegisterScreen()),
         GetPage(name: '/home', page: () => const HomeScreen()),
-        GetPage(name: '/sos', page: () => SosScreen()),
+        GetPage(name: '/sos', page: () => SosFloatingButton()),
       ],
     );
   }

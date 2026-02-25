@@ -353,7 +353,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
         fontSize: 14,
         color: AppColors.black,
         height: 1.5,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
@@ -382,7 +382,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
               style: GoogleFonts.openSans(
                 fontSize: 14,
                 color: AppColors.black,
-              ).copyWith(height: 1.5, fontWeight: FontWeight.bold),
+              ).copyWith(height: 1.5, fontWeight: FontWeight.w400),
             ),
           ),
         ],
