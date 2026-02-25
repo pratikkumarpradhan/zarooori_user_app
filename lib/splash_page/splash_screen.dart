@@ -475,39 +475,35 @@ class _SplashScreenState extends State<SplashScreen>
                         children: [
                           // Logo / hero image – small card, image centred inside
                           Container(
-                            height: 100,
-                            width: 250, // 👈 fixed width prevents layout jump
+                            height: 120,
+                            width: 300, // 👈 fixed width prevents layout jump
                             alignment: Alignment.center,
-                            // decoration: BoxDecoration(
-                            //   borderRadius: BorderRadius.circular(20),
-                            //   border: Border.all(
-                            //     color: Colors.black54.withOpacity(0.25),
-                            //     width: 2,
-                            //   ),
-                            //   boxShadow: [
-                            //     BoxShadow(
-                            //       color: Colors.black.withValues(alpha: 0.08),
-                            //       blurRadius: 10,
-                            //       offset: const Offset(0, 8),
-                            //     ),
-                            //     BoxShadow(
-                            //       color: Colors.white.withValues(alpha: 0.6),
-                            //       offset: const Offset(0, -2),
-                            //     ),
-                            //   ],
-                            // ),
-                            child: ClipRRect(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              child: Padding(
-                                padding: const EdgeInsets.all(
-                                  12,
-                                ), // 👈 spacing around logo
-                                child: Image.asset(
-                                  'assets/images/app_icon.png',
-                                  fit: BoxFit.contain,
-                                ),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.55),
+                                width: 2,
                               ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.08),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 8),
+                                ),
+                                BoxShadow(
+                                  color: Colors.white.withValues(alpha: 0.6),
+                                  offset: const Offset(0, -2),
+                                ),
+                              ],
                             ),
+                            child: ClipRRect(
+    borderRadius: BorderRadius.circular(20), // 👈 corner radius
+    child: Image.asset(
+      'assets/images/app_icon.png',
+      height: 110,
+      fit: BoxFit.contain,
+    ),
+  ),
                           ),
                           const SizedBox(height: 8),
                           // Tagline (compact height)
@@ -525,7 +521,7 @@ class _SplashScreenState extends State<SplashScreen>
                                       letterSpacing: 0.3,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                speed: const Duration(milliseconds: 100),
+                                speed: const Duration(milliseconds: 90),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -570,13 +566,11 @@ class _SplashScreenState extends State<SplashScreen>
                                       0.0,
                                       1.0,
                                     );
-                                    final leftOffset =
-                                        -50 +
-                                        (MediaQuery.of(context).size.width -
-                                                140 -
-                                                50) *
-                                            progress;
-
+                                   final leftOffset =
+    -50 +
+    (MediaQuery.of(context).size.width - 140 - 50) *
+        progress *
+        1.4; // 🔥 speed increase
                                     return Positioned(
                                       left: leftOffset,
                                       child: Transform.rotate(
