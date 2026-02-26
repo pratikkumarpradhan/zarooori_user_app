@@ -4,9 +4,9 @@ import 'package:zarooori_user/api_services/buy_vehicle_api.dart';
 import 'package:zarooori_user/api_services/vehicle_insurance_api.dart';
 import 'package:zarooori_user/decorative_ui/app_colours.dart';
 import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
+import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
 import 'package:zarooori_user/models/buy_vehicle_model.dart';
 import 'package:zarooori_user/models/product_model.dart';
-
 
 class SearchInsuranceScreen extends StatefulWidget {
   final ProductRequest? initialRequest;
@@ -105,8 +105,14 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
 
   Widget _buildLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Text(text, style: AppTextStyles.textView(size: 13, color: AppColors.black)),
+      padding: const EdgeInsets.only(left: 2, bottom: 6),
+      child: Text(
+        text,
+        style: AppTextStyles.textView13Ssp(color: Colors.black.withOpacity(0.65)).copyWith(
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.2,
+        ),
+      ),
     );
   }
 
@@ -118,20 +124,21 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.bgEdittext,
-          borderRadius: BorderRadius.circular(8),
-        ),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: PremiumDecorations.input(fillColor: const Color(0xFFFFF59D).withOpacity(0.5))
+            .copyWith(border: Border.all(color: const Color(0xFFFFD600), width: 2)),
         child: Row(
           children: [
             Expanded(
               child: Text(
                 value.isEmpty ? hint : value,
-                style: AppTextStyles.editText13Ssp(color: value.isEmpty ? AppColors.gray : AppColors.black),
+                style: AppTextStyles.editText13Ssp(
+                  color: value.isEmpty ? AppColors.gray : AppColors.black,
+                ).copyWith(fontSize: 14, height: 1.4),
               ),
             ),
-            const Icon(Icons.arrow_drop_down, color: AppColors.black),
+            Icon(Icons.arrow_drop_down_rounded, color: PremiumDecorations.primaryButton, size: 24),
           ],
         ),
       ),
@@ -182,18 +189,74 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
   }) {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => SizedBox(
-        height: 300,
-        child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (_, i) => ListTile(
-            title: Text(items[i]),
-            selected: i == selected,
-            onTap: () {
-              onSelect(i);
-              Navigator.pop(ctx);
-            },
-          ),
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        height: 350,
+        decoration: BoxDecoration(
+          color: PremiumDecorations.cardBackground,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+          border: Border.all(color: PremiumDecorations.cardBorder.withOpacity(0.8), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              blurRadius: 24,
+              offset: const Offset(0, -4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 14),
+              width: 44,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                itemCount: items.length,
+                itemBuilder: (_, i) => InkWell(
+                  onTap: () {
+                    onSelect(i);
+                    Navigator.pop(ctx);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    decoration: BoxDecoration(
+                      color: i == selected ? const Color(0xFFFFB300).withOpacity(0.2) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            items[i],
+                            style: AppTextStyles.textView(
+                              size: 14,
+                              color: i == selected ? const Color(0xFFFFB300) : AppColors.black,
+                            ).copyWith(
+                              fontWeight: i == selected ? FontWeight.w600 : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        if (i == selected)
+                          Icon(
+                            Icons.check_circle,
+                            color: const Color(0xFFFFB300),
+                            size: 20,
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -202,140 +265,219 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.black),
-          onPressed: () => Get.back(),
+        leading: Container(
+          margin: const EdgeInsets.only(left: 8),
+          child: IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
+              padding: const EdgeInsets.all(8),
+            ),
+            icon: const Icon(Icons.arrow_back, color: AppColors.black, size: 20),
+            onPressed: () => Get.back(),
+          ),
         ),
-        title: Text('Search Insurance', style: AppTextStyles.textView(size: 18, color: AppColors.black)),
+        title: Text(
+          'Search Insurance',
+          style: AppTextStyles.textView(size: 18, color: AppColors.black).copyWith(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.purple700))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text('Include some details', style: AppTextStyles.textView(size: 13, color: AppColors.purple700)),
-                  const SizedBox(height: 14),
-                  _buildLabel('Select Vehicle Company'),
-                  _buildDropdown(
-                    value: _brandsList.isEmpty || _brandIndex >= _brandsList.length
-                        ? ''
-                        : (_brandsList[_brandIndex].vehicle_brand_name ?? ''),
-                    hint: 'Select Brand',
-                    onTap: () => _showPicker(
-                      items: _brandsList.map((e) => e.vehicle_brand_name ?? '').toList(),
-                      selected: _brandIndex,
-                      onSelect: (i) {
-                        setState(() {
-                          _brandIndex = i;
-                          _typeIndex = 0;
-                          _modelIndex = 0;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  _buildLabel('Select Type'),
-                  _buildDropdown(
-                    value: _brandsList.isEmpty ||
-                            _brandIndex >= _brandsList.length ||
-                            _brandsList[_brandIndex].type_list.isEmpty ||
-                            _typeIndex >= _brandsList[_brandIndex].type_list.length
-                        ? ''
-                        : (_brandsList[_brandIndex].type_list[_typeIndex].vehicle_type_name ?? ''),
-                    hint: 'Select Type',
-                    onTap: () {
-                      if (_brandsList.isEmpty || _brandIndex >= _brandsList.length) return;
-                      final types = _brandsList[_brandIndex].type_list;
-                      if (types.isEmpty) return;
-                      _showPicker(
-                        items: types.map((e) => e.vehicle_type_name ?? '').toList(),
-                        selected: _typeIndex,
-                        onSelect: (i) {
-                          setState(() {
-                            _typeIndex = i;
-                            _modelIndex = 0;
-                          });
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 14),
-                  _buildLabel('Select Model'),
-                  _buildDropdown(
-                    value: _brandsList.isEmpty ||
-                            _brandIndex >= _brandsList.length ||
-                            _brandsList[_brandIndex].type_list.isEmpty ||
-                            _typeIndex >= _brandsList[_brandIndex].type_list.length
-                        ? ''
-                        : () {
-                            final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
-                            return models.isEmpty || _modelIndex >= models.length
-                                ? ''
-                                : (models[_modelIndex].vehicle_model_name ?? '');
-                          }(),
-                    hint: 'Select Model',
-                    onTap: () {
-                      if (_brandsList.isEmpty ||
-                          _brandIndex >= _brandsList.length ||
-                          _brandsList[_brandIndex].type_list.isEmpty ||
-                          _typeIndex >= _brandsList[_brandIndex].type_list.length) {
-                        return;
-                      }
-                      final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
-                      if (models.isEmpty) {
-                        return;
-                      }
-                      _showPicker(
-                        items: models.map((e) => e.vehicle_model_name ?? '').toList(),
-                        selected: _modelIndex,
-                        onSelect: (i) => setState(() => _modelIndex = i),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 14),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFFFD600),
+              Color(0xFFFFEA00),
+              Color(0xFFFFF176),
+              Color(0xFFFFE082),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator(color: AppColors.black))
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
+                      Container(
+                        decoration: PremiumDecorations.card().copyWith(
+                          border: Border.all(color: Colors.black87, width: 2),
+                        ),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            _buildLabel('Select Year'),
-                            _buildDropdown(
-                              value: _yearsList.isEmpty || _yearIndex >= _yearsList.length
-                                  ? ''
-                                  : (_yearsList[_yearIndex].year ?? ''),
-                              hint: 'Select Year',
-                              onTap: () => _showPicker(
-                                items: _yearsList.map((e) => e.year ?? '').toList(),
-                                selected: _yearIndex,
-                                onSelect: (i) => setState(() => _yearIndex = i),
+                            Text(
+                              'Include some details',
+                              style: AppTextStyles.textView(size: 15, color: AppColors.black).copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _buildLabel('Type of Insurance'),
+                            const SizedBox(height: 12),
+                            _buildLabel('Select Vehicle Company'),
                             _buildDropdown(
-                              value: _insuranceTypes.isEmpty || _insuranceIndex >= _insuranceTypes.length
+                              value: _brandsList.isEmpty || _brandIndex >= _brandsList.length
                                   ? ''
-                                  : (_insuranceTypes[_insuranceIndex].sub_cat_name ?? ''),
-                              hint: 'Select Insurance Type',
+                                  : (_brandsList[_brandIndex].vehicle_brand_name ?? ''),
+                              hint: 'Select Brand',
                               onTap: () => _showPicker(
-                                items: _insuranceTypes.map((e) => e.sub_cat_name ?? '').toList(),
-                                selected: _insuranceIndex,
-                                onSelect: (i) => setState(() => _insuranceIndex = i),
+                                items: _brandsList.map((e) => e.vehicle_brand_name ?? '').toList(),
+                                selected: _brandIndex,
+                                onSelect: (i) {
+                                  setState(() {
+                                    _brandIndex = i;
+                                    _typeIndex = 0;
+                                    _modelIndex = 0;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            _buildLabel('Select Type'),
+                            _buildDropdown(
+                              value: _brandsList.isEmpty ||
+                                      _brandIndex >= _brandsList.length ||
+                                      _brandsList[_brandIndex].type_list.isEmpty ||
+                                      _typeIndex >= _brandsList[_brandIndex].type_list.length
+                                  ? ''
+                                  : (_brandsList[_brandIndex].type_list[_typeIndex].vehicle_type_name ?? ''),
+                              hint: 'Select Type',
+                              onTap: () {
+                                if (_brandsList.isEmpty || _brandIndex >= _brandsList.length) return;
+                                final types = _brandsList[_brandIndex].type_list;
+                                if (types.isEmpty) return;
+                                _showPicker(
+                                  items: types.map((e) => e.vehicle_type_name ?? '').toList(),
+                                  selected: _typeIndex,
+                                  onSelect: (i) {
+                                    setState(() {
+                                      _typeIndex = i;
+                                      _modelIndex = 0;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 12),
+                            _buildLabel('Select Model'),
+                            _buildDropdown(
+                              value: _brandsList.isEmpty ||
+                                      _brandIndex >= _brandsList.length ||
+                                      _brandsList[_brandIndex].type_list.isEmpty ||
+                                      _typeIndex >= _brandsList[_brandIndex].type_list.length
+                                  ? ''
+                                  : () {
+                                      final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
+                                      return models.isEmpty || _modelIndex >= models.length
+                                          ? ''
+                                          : (models[_modelIndex].vehicle_model_name ?? '');
+                                    }(),
+                              hint: 'Select Model',
+                              onTap: () {
+                                if (_brandsList.isEmpty ||
+                                    _brandIndex >= _brandsList.length ||
+                                    _brandsList[_brandIndex].type_list.isEmpty ||
+                                    _typeIndex >= _brandsList[_brandIndex].type_list.length) return;
+
+                                final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
+                                if (models.isEmpty) return;
+
+                                _showPicker(
+                                  items: models.map((e) => e.vehicle_model_name ?? '').toList(),
+                                  selected: _modelIndex,
+                                  onSelect: (i) => setState(() => _modelIndex = i),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      _buildLabel('Select Year'),
+                                      _buildDropdown(
+                                        value: _yearsList.isEmpty || _yearIndex >= _yearsList.length
+                                            ? ''
+                                            : (_yearsList[_yearIndex].year ?? ''),
+                                        hint: 'Select Year',
+                                        onTap: () => _showPicker(
+                                          items: _yearsList.map((e) => e.year ?? '').toList(),
+                                          selected: _yearIndex,
+                                          onSelect: (i) => setState(() => _yearIndex = i),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      _buildLabel('Type of Insurance'),
+                                      _buildDropdown(
+                                        value: _insuranceTypes.isEmpty || _insuranceIndex >= _insuranceTypes.length
+                                            ? ''
+                                            : (_insuranceTypes[_insuranceIndex].sub_cat_name ?? ''),
+                                        hint: 'Select Insurance Type',
+                                        onTap: () => _showPicker(
+                                          items: _insuranceTypes.map((e) => e.sub_cat_name ?? '').toList(),
+                                          selected: _insuranceIndex,
+                                          onSelect: (i) => setState(() => _insuranceIndex = i),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            _buildLabel('State'),
+                            _buildDropdown(
+                              value: _stateList.isEmpty || _stateIndex >= _stateList.length
+                                  ? 'All States'
+                                  : (_stateList[_stateIndex].name ?? ''),
+                              hint: 'All States',
+                              onTap: _loadStatesAndShowPicker,
+                            ),
+                            const SizedBox(height: 12),
+                            _buildLabel('City'),
+                            _buildDropdown(
+                              value: _cityList.isEmpty || _cityIndex >= _cityList.length
+                                  ? 'All Cities'
+                                  : (_cityList[_cityIndex].name ?? ''),
+                              hint: 'All Cities',
+                              onTap: () {
+                                if (_cityList.isEmpty) return;
+                                _showPicker(
+                                  items: _cityList.map((e) => e.name ?? '').toList(),
+                                  selected: _cityIndex,
+                                  onSelect: (i) => setState(() => _cityIndex = i),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 28),
+                            SizedBox(
+                              height: 52,
+                              child: ElevatedButton(
+                                onPressed: _onSearch,
+                                style: PremiumDecorations.primaryButtonStyle,
+                                child: Text(
+                                  'Search',
+                                  style: AppTextStyles.textView(size: 16, color: AppColors.black)
+                                      .copyWith(fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ),
                           ],
@@ -343,46 +485,9 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 14),
-                  _buildLabel('State'),
-                  _buildDropdown(
-                    value: _stateList.isEmpty || _stateIndex >= _stateList.length
-                        ? 'All States'
-                        : (_stateList[_stateIndex].name ?? ''),
-                    hint: 'All States',
-                    onTap: () => _loadStatesAndShowPicker(),
-                  ),
-                  const SizedBox(height: 14),
-                  _buildLabel('City'),
-                  _buildDropdown(
-                    value: _cityList.isEmpty || _cityIndex >= _cityList.length
-                        ? 'All Cities'
-                        : (_cityList[_cityIndex].name ?? ''),
-                    hint: 'All Cities',
-                    onTap: () {
-                      if (_cityList.isEmpty) return;
-                      _showPicker(
-                        items: _cityList.map((e) => e.name ?? '').toList(),
-                        selected: _cityIndex,
-                        onSelect: (i) => setState(() => _cityIndex = i),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 40),
-                  SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: _onSearch,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.purple700,
-                        foregroundColor: AppColors.black,
-                      ),
-                      child: const Text('Search'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
+        ),
+      ),
     );
   }
 }
