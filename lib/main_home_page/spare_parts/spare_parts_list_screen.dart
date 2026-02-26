@@ -71,7 +71,9 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
       _errorMsg = null;
     });
     try {
-      final list = await VehicleInsuranceApi.getProductList(widget.productRequest);
+      final list = await VehicleInsuranceApi.getProductList(
+        widget.productRequest,
+      );
       if (!mounted) return;
       setState(() {
         _products = list;
@@ -104,7 +106,11 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
               backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
               padding: const EdgeInsets.all(8),
             ),
-            icon: const Icon(Icons.arrow_back, color: AppColors.black, size: 20),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.black,
+              size: 20,
+            ),
             onPressed: () => Get.back(),
           ),
         ),
@@ -125,13 +131,19 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
                 backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
                 padding: const EdgeInsets.all(8),
               ),
-              icon: const Icon(Icons.tune_rounded, color: AppColors.black, size: 20),
+              icon: const Icon(
+                Icons.tune_rounded,
+                color: AppColors.black,
+                size: 20,
+              ),
               onPressed: () async {
-                final req = await Get.to<ProductRequest>(() => SearchProductScreen(
-                      mainCatId: '6',
-                      screenTitle: 'Search Spare Parts',
-                      initialRequest: widget.productRequest,
-                    ));
+                final req = await Get.to<ProductRequest>(
+                  () => SearchProductScreen(
+                    mainCatId: '6',
+                    screenTitle: 'Search Spare Parts',
+                    initialRequest: widget.productRequest,
+                  ),
+                );
                 if (req != null && mounted) {
                   Get.off(() => SparePartsListScreen(productRequest: req));
                 }
@@ -154,15 +166,31 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
             stops: [0.0, 0.35, 0.7, 1.0],
           ),
         ),
-       child: Stack(
-  children: [
-    const Positioned(top: -40, right: -30, child: ProfileBubble(size: 140, color: Color(0xFFFF9800))),
-    const Positioned(top: 140, left: -40, child: ProfileBubble(size: 110, color: Color(0xFFF57C00))),
-    const Positioned(bottom: 200, right: -20, child: ProfileBubble(size: 90, color: Color(0xFFFF9800))),
-    const Positioned(bottom: -60, left: -40, child: ProfileBubble(size: 180, color: Color(0xFFF57C00))),
-    SafeArea(child: _BodyContent()),
-  ],
-),
+        child: Stack(
+          children: [
+            const Positioned(
+              top: -40,
+              right: -30,
+              child: ProfileBubble(size: 140, color: Color(0xFFFF9800)),
+            ),
+            const Positioned(
+              top: 140,
+              left: -40,
+              child: ProfileBubble(size: 110, color: Color(0xFFF57C00)),
+            ),
+            const Positioned(
+              bottom: 200,
+              right: -20,
+              child: ProfileBubble(size: 90, color: Color(0xFFFF9800)),
+            ),
+            const Positioned(
+              bottom: -60,
+              left: -40,
+              child: ProfileBubble(size: 180, color: Color(0xFFF57C00)),
+            ),
+            SafeArea(child: _BodyContent()),
+          ],
+        ),
       ),
     );
   }
@@ -215,25 +243,29 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
         const SizedBox(height: 16),
         Expanded(
           child: _isLoading
-              ? const Center(child: CircularProgressIndicator(color: AppColors.black))
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColors.black),
+                )
               : _errorMsg != null && _products.isEmpty
-                  ? _buildErrorCard()
-                  : _filtered.isEmpty
-                      ? _buildEmptyCard()
-                      : GridView.builder(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.74,
-                            crossAxisSpacing: 14,
-                            mainAxisSpacing: 14,
-                          ),
-                          itemCount: _filtered.length,
-                          itemBuilder: (_, i) => _ProductCard(
-                            product: _filtered[i],
-                            onTap: () => Get.to(() => ProductDetailScreen(product: _filtered[i])),
-                          ),
-                        ),
+              ? _buildErrorCard()
+              : _filtered.isEmpty
+              ? _buildEmptyCard()
+              : GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.74,
+                    crossAxisSpacing: 14,
+                    mainAxisSpacing: 14,
+                  ),
+                  itemCount: _filtered.length,
+                  itemBuilder: (_, i) => _ProductCard(
+                    product: _filtered[i],
+                    onTap: () => Get.to(
+                      () => ProductDetailScreen(product: _filtered[i]),
+                    ),
+                  ),
+                ),
         ),
       ],
     );
@@ -255,9 +287,16 @@ class _SparePartsListScreenState extends State<SparePartsListScreen> {
               decoration: BoxDecoration(
                 color: Colors.red.withOpacity(0.12),
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.red.withOpacity(0.3), width: 1.5),
+                border: Border.all(
+                  color: Colors.red.withOpacity(0.3),
+                  width: 1.5,
+                ),
               ),
-              child: const Icon(Icons.error_outline_rounded, size: 40, color: Colors.red),
+              child: const Icon(
+                Icons.error_outline_rounded,
+                size: 40,
+                color: Colors.red,
+              ),
             ),
             const SizedBox(height: 20),
             Text(
@@ -369,12 +408,17 @@ class _ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(22),
+                ),
                 child: SizedBox(
                   height: 100,
                   width: double.infinity,
                   child: imageUrl.isEmpty
-                      ? Image.asset('assets/images/placeholder.png', fit: BoxFit.cover)
+                      ? Image.asset(
+                          'assets/images/placeholder.png',
+                          fit: BoxFit.cover,
+                        )
                       : CachedNetworkImage(
                           imageUrl: imageUrl,
                           fit: BoxFit.cover,
@@ -399,7 +443,8 @@ class _ProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (product.product_code != null && product.product_code!.isNotEmpty)
+                    if (product.product_code != null &&
+                        product.product_code!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
@@ -424,7 +469,8 @@ class _ProductCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (product.vehicle_company_name != null && product.vehicle_company_name!.isNotEmpty)
+                    if (product.vehicle_company_name != null &&
+                        product.vehicle_company_name!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
@@ -441,11 +487,17 @@ class _ProductCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     if (product.price != null && product.price!.isNotEmpty)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFFFF59D).withOpacity(0.5),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: const Color(0xFFFFD600), width: 1),
+                          border: Border.all(
+                            color: const Color(0xFFFFD600),
+                            width: 1,
+                          ),
                         ),
                         child: Text(
                           '₹${product.price}',
