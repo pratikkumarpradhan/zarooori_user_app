@@ -31,7 +31,6 @@ import 'package:zarooori_user/widgets/header_widget.dart';
 import 'package:zarooori_user/widgets/service_grid_widget.dart';
 import 'package:zarooori_user/widgets/vehicle_selection_screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -53,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen>
     'assets/images/slider4.jpeg',
     'assets/images/slider2.png',
     'assets/images/slider3.jpeg',
-   
   ];
 
   @override
@@ -119,17 +117,41 @@ class _HomeScreenState extends State<HomeScreen>
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Scaffold(
+        
         key: _scaffoldKey,
         backgroundColor: Colors.transparent,
-        extendBodyBehindAppBar: false,
+        extendBodyBehindAppBar: true,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(72),
-          child: HeaderWidget(
-            userName: _userName,
-            onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-            onNotificationTap: () =>
-                Get.to(() => const NotificationListScreen()),
-            onLanguageTap: () {},
+          child: Material(
+            color: Colors.transparent, // IMPORTANT
+            child: Container(
+ 
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(28),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 12,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(28),
+                ),
+                child: HeaderWidget(
+                  userName: _userName,
+                  onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+                  onNotificationTap: () =>
+                      Get.to(() => const NotificationListScreen()),
+                  onLanguageTap: () {},
+                ),
+              ),
+            ),
           ),
         ),
         drawer: DrawerMenuWidget(
@@ -172,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen>
             _buildBookingsTabContent(),
           ],
         ),
+        extendBody: true,
         bottomNavigationBar: _buildBottomNav(),
       ),
     );
@@ -179,6 +202,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildDashboardContent() {
     return Container(
+      
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -379,67 +403,40 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFF59D),
-        border: Border(
-          top: BorderSide(
-            color: Colors.black.withValues(alpha: 0.06),
-            width: 1,
-          ),
+Widget _buildBottomNav() {
+  return ClipRRect(
+    borderRadius: const BorderRadius.vertical(
+      top: Radius.circular(28), // ⭐ Rounded top corners
+    ),
+    child: Container(
+      height: 90,
+       decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [ Color(0xFFFFEB3B),Color(0xFFFFF59D),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, -2),
-          ),
-          BoxShadow(
-            color: const Color(0xFFE6C34D).withValues(alpha: 0.2),
-            blurRadius: 8,
-            offset: const Offset(0, -1),
-          ),
-        ],
       ),
       padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(
-            0,
-            Icons.dashboard,
-            'Dashboard',
-            () => setState(() => _selectedNavIndex = 0),
-          ),
-          _buildNavItem(
-            1,
-            Icons.chat,
-            'Chat',
-            () => setState(() => _selectedNavIndex = 1),
-          ),
-          _buildNavItem(
-            2,
-            Icons.local_offer,
-            'Offers',
-            () => setState(() => _selectedNavIndex = 2),
-          ),
-          _buildNavItem(
-            3,
-            Icons.alarm,
-            'My Reminders',
-            () => setState(() => _selectedNavIndex = 3),
-          ),
-          _buildNavItem(
-            4,
-            Icons.book,
-            'My Bookings',
-            () => setState(() => _selectedNavIndex = 4),
-          ),
+          _buildNavItem(0, Icons.dashboard, 'Dashboard',
+              () => setState(() => _selectedNavIndex = 0)),
+          _buildNavItem(1, Icons.chat, 'Chat',
+              () => setState(() => _selectedNavIndex = 1)),
+          _buildNavItem(2, Icons.local_offer, 'Offers',
+              () => setState(() => _selectedNavIndex = 2)),
+          _buildNavItem(3, Icons.alarm, 'My Reminders',
+              () => setState(() => _selectedNavIndex = 3)),
+          _buildNavItem(4, Icons.book, 'My Bookings',
+              () => setState(() => _selectedNavIndex = 4)),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   void _onOffersTap() async {
     final id = await showOffersCategorySheet(
@@ -619,7 +616,7 @@ class _HomeScreenState extends State<HomeScreen>
     final isSelected = _selectedNavIndex == index;
     final iconColor = isSelected ? const Color(0xFFF57C00) : Colors.black54;
     final textColor = isSelected ? Colors.black : Colors.black;
-    final scale = isSelected ? 1.08 : 1.0;
+    final scale = isSelected ? 1.1 : 0.9;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -645,13 +642,13 @@ class _HomeScreenState extends State<HomeScreen>
                       ],
                     )
                   : null,
-              child: Icon(icon, size: 24, color: iconColor),
+              child: Icon(icon, size: 22, color: iconColor),
             ),
             const SizedBox(height: 6),
             Text(
               label,
               style: GoogleFonts.openSans(
-                fontSize: 11,
+                fontSize: 10,
                 color: textColor,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
               ),
