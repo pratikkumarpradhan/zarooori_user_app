@@ -566,6 +566,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             fontSize: 16,
                                             fontWeight:
                                                 FontWeight.w600,
+                                                height: 1.2
                                           ),
                                         ),
                                       ),

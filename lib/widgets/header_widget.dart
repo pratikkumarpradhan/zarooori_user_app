@@ -59,7 +59,8 @@ class HeaderWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFFFF59D), Color(0xFFFFEB3B)],
+          colors: [Color(0xFFFFF59D), Color(0xFFFFEB3B)
+          ],
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 14),
