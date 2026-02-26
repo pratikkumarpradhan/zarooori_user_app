@@ -616,7 +616,7 @@ Widget _buildBottomNav() {
     final isSelected = _selectedNavIndex == index;
     final iconColor = isSelected ? const Color(0xFFF57C00) : Colors.black54;
     final textColor = isSelected ? Colors.black : Colors.black;
-    final scale = isSelected ? 1.1 : 0.9;
+    final scale = isSelected ? 1.2 : 0.9;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
