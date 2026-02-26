@@ -117,25 +117,33 @@ class _HomeScreenState extends State<HomeScreen>
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Scaffold(
-        
         key: _scaffoldKey,
         backgroundColor: Colors.transparent,
         extendBodyBehindAppBar: true,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(72),
           child: Material(
-            color: Colors.transparent, // IMPORTANT
+            color:
+                Colors.transparent, // keep transparent to show gradient if any
             child: Container(
- 
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(28),
+                ),
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.15), // subtle outline
+                  width: 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 12,
-                    offset: Offset(0, 4),
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 16,
+                    offset: const Offset(0, 6),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -202,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildDashboardContent() {
     return Container(
-      
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -403,40 +410,172 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-Widget _buildBottomNav() {
-  return ClipRRect(
-    borderRadius: const BorderRadius.vertical(
-      top: Radius.circular(28), // ⭐ Rounded top corners
-    ),
-    child: Container(
-      height: 90,
-       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [ Color(0xFFFFEB3B),Color(0xFFFFF59D),
-          ],
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(0, Icons.dashboard, 'Dashboard',
-              () => setState(() => _selectedNavIndex = 0)),
-          _buildNavItem(1, Icons.chat, 'Chat',
-              () => setState(() => _selectedNavIndex = 1)),
-          _buildNavItem(2, Icons.local_offer, 'Offers',
-              () => setState(() => _selectedNavIndex = 2)),
-          _buildNavItem(3, Icons.alarm, 'My Reminders',
-              () => setState(() => _selectedNavIndex = 3)),
-          _buildNavItem(4, Icons.book, 'My Bookings',
-              () => setState(() => _selectedNavIndex = 4)),
+  //   Widget _buildBottomNav() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: const BorderRadius.vertical(
+  //         top: Radius.circular(30),
+  //       ),
+
+  //       /// Outer shadow to separate from screen
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.black.withOpacity(0.15),
+  //           blurRadius: 20,
+  //           offset: const Offset(0, -4),
+  //         ),
+  //       ],
+  //     ),
+  //     child: ClipRRect(
+  //       borderRadius: const BorderRadius.vertical(
+  //         top: Radius.circular(30),
+  //       ),
+  //       child: Container(
+  //         height: 80,
+  //         decoration: BoxDecoration(
+  //           gradient: const LinearGradient(
+  //             begin: Alignment.topLeft,
+  //             end: Alignment.bottomRight,
+  //             colors: [
+  //               Color(0xFFFFEB3B),
+  //               Color(0xFFFFF59D),
+  //             ],
+  //           ),
+
+  //           /// ⭐ TOP CURVE OUTLINE EFFECT
+  //           border: Border(
+  //             top: BorderSide(
+  //               color: Colors.white.withOpacity(0.9), // highlight line
+  //               width: 1.5,
+  //             ),
+  //           ),
+
+  //           boxShadow: [
+  //             /// Top glow highlight
+  //             BoxShadow(
+  //               color: Colors.white.withOpacity(0.6),
+  //               blurRadius: 12,
+  //               offset: const Offset(0, -3),
+  //             ),
+
+  //             /// Depth shadow
+  //             BoxShadow(
+  //               color: Colors.black.withOpacity(0.12),
+  //               blurRadius: 10,
+  //               offset: const Offset(0, -2),
+  //             ),
+  //           ],
+  //         ),
+  //         padding: const EdgeInsets.symmetric(vertical: 14),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //           children: [
+  //             _buildNavItem(
+  //               0,
+  //               Icons.dashboard,
+  //               'Dashboard',
+  //               () => setState(() => _selectedNavIndex = 0),
+  //             ),
+  //             _buildNavItem(
+  //               1,
+  //               Icons.chat,
+  //               'Chat',
+  //               () => setState(() => _selectedNavIndex = 1),
+  //             ),
+  //             _buildNavItem(
+  //               2,
+  //               Icons.local_offer,
+  //               'Offers',
+  //               () => setState(() => _selectedNavIndex = 2),
+  //             ),
+  //             _buildNavItem(
+  //               3,
+  //               Icons.alarm,
+  //               'My Reminders',
+  //               () => setState(() => _selectedNavIndex = 3),
+  //             ),
+  //             _buildNavItem(
+  //               4,
+  //               Icons.book,
+  //               'My Bookings',
+  //               () => setState(() => _selectedNavIndex = 4),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget _buildBottomNav() {
+    return Container(
+      margin: const EdgeInsets.all(8), // space to show full outline
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+
+        /// ⭐ FULL CURVE OUTLINE
+        border: Border.all(color: Colors.black.withOpacity(0.35), width: 1.5),
+
+        /// Shadow to lift navbar
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.18),
+            blurRadius: 20,
+            offset: const Offset(0, -4),
+          ),
         ],
       ),
-    ),
-  );
-}
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: Container(
+          height: 80,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFFFEB3B), Color(0xFFFFF59D)],
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                0,
+                Icons.dashboard,
+                'Dashboard',
+                () => setState(() => _selectedNavIndex = 0),
+              ),
+              _buildNavItem(
+                1,
+                Icons.chat,
+                'Chat',
+                () => setState(() => _selectedNavIndex = 1),
+              ),
+              _buildNavItem(
+                2,
+                Icons.local_offer,
+                'Offers',
+                () => setState(() => _selectedNavIndex = 2),
+              ),
+              _buildNavItem(
+                3,
+                Icons.alarm,
+                'My Reminders',
+                () => setState(() => _selectedNavIndex = 3),
+              ),
+              _buildNavItem(
+                4,
+                Icons.book,
+                'My Bookings',
+                () => setState(() => _selectedNavIndex = 4),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   void _onOffersTap() async {
     final id = await showOffersCategorySheet(
@@ -607,6 +746,57 @@ Widget _buildBottomNav() {
     return const BookingListScreen(showBackButton: false);
   }
 
+  // Widget _buildNavItem(
+  //   int index,
+  //   IconData icon,
+  //   String label,
+  //   VoidCallback onTap,
+  // ) {
+  //   final isSelected = _selectedNavIndex == index;
+  //   final iconColor = isSelected ? const Color(0xFFF57C00) : Colors.black54;
+  //   final textColor = isSelected ? Colors.black : Colors.black87;
+  //   final scale = isSelected ? 1.1 : 0.9;
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     behavior: HitTestBehavior.opaque,
+  //     child: AnimatedScale(
+  //       scale: scale,
+  //       duration: const Duration(milliseconds: 200),
+  //       curve: Curves.easeOut,
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           Container(
+  //             padding: const EdgeInsets.all(8),
+  //             decoration: isSelected
+  //                 ? BoxDecoration(
+  //                     color: Colors.white.withValues(alpha: 0.7),
+  //                     borderRadius: BorderRadius.circular(12),
+  //                     boxShadow: [
+  //                       BoxShadow(
+  //                         color: Colors.black.withValues(alpha: 0.06),
+  //                         blurRadius: 8,
+  //                         offset: const Offset(0, 2),
+  //                       ),
+  //                     ],
+  //                   )
+  //                 : null,
+  //             child: Icon(icon, size: 22, color: iconColor),
+  //           ),
+  //           const SizedBox(height: 6),
+  //           Text(
+  //             label,
+  //             style: GoogleFonts.openSans(
+  //               fontSize: 10,
+  //               color: textColor,
+  //               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget _buildNavItem(
     int index,
     IconData icon,
@@ -615,8 +805,9 @@ Widget _buildBottomNav() {
   ) {
     final isSelected = _selectedNavIndex == index;
     final iconColor = isSelected ? const Color(0xFFF57C00) : Colors.black54;
-    final textColor = isSelected ? Colors.black : Colors.black;
-    final scale = isSelected ? 1.2 : 0.9;
+    final textColor = isSelected ? Colors.black : Colors.black87;
+    final scale = isSelected ? 1.0 : 0.9;
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -631,12 +822,21 @@ Widget _buildBottomNav() {
               padding: const EdgeInsets.all(8),
               decoration: isSelected
                   ? BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.7),
-                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: Colors.black.withOpacity(0.15),
+                        width: 1.2,
+                      ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.06),
-                          blurRadius: 8,
+                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
                       ],
@@ -644,13 +844,13 @@ Widget _buildBottomNav() {
                   : null,
               child: Icon(icon, size: 22, color: iconColor),
             ),
-            const SizedBox(height: 6),
+            // const SizedBox(height: 2),
             Text(
               label,
               style: GoogleFonts.openSans(
                 fontSize: 10,
                 color: textColor,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
               ),
             ),
           ],
