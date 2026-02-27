@@ -8,6 +8,7 @@ import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
 import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
 import 'package:zarooori_user/drawer_menu/about_us/about_us_screen.dart';
 import 'package:zarooori_user/drawer_menu/bookings_list/bookings_list_screen.dart';
+import 'package:zarooori_user/drawer_menu/dealer/dealer_screen.dart';
 import 'package:zarooori_user/drawer_menu/rfq/add_rfq_screen.dart';
 import 'package:zarooori_user/drawer_menu/orders/orders_list_screen.dart';
 import 'package:zarooori_user/drawer_menu/page_detail_screen.dart';
@@ -116,6 +117,8 @@ class _SellVehicleListScreenState extends State<SellVehicleListScreen> {
         onContactUs: () => Get.to(() => const PageDetailScreen(pageNo: '2')),
         onTerms: () => Get.to(() => const PageDetailScreen(pageNo: '4')),
         onPrivacy: () => Get.to(() => const PageDetailScreen(pageNo: '3')),
+                  onDealer: () => Get.to(() => const DealerDemoScreen()),
+
         onHelp: () => Get.to(
           () => const WebViewScreen(
             url: 'https://aswack.com/help.php',
