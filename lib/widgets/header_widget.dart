@@ -113,7 +113,7 @@ class HeaderWidget extends StatelessWidget {
                     userName,
                     style: GoogleFonts.openSans(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black,
                       letterSpacing: 0.4,
                     ),

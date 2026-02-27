@@ -144,8 +144,7 @@ flutter:
     - assets/images/cab_service.jpg
     - assets/images/splash2.png
   
-    - assets/videos/
-    - assets/videos/splash.mp4
+
 
 flutter_launcher_icons:
   android: true

@@ -609,8 +609,7 @@ class _BuyVehicleScreenState extends State<BuyVehicleScreen> {
               Flexible(
                 child: Text(
                   label,
-                  style: AppTextStyles.textView(
-                    size: 12,
+                  style: GoogleFonts.openSans(fontSize:  12,
                     color: isSelected ? const Color(0xFFFFB300) : AppColors.black,
                   ).copyWith(
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,

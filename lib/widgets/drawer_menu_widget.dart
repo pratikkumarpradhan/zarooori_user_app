@@ -236,8 +236,7 @@ class DrawerMenuWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Smart services, on time.',
-                  style: AppTextStyles.textView(
-                    size: 11,
+                  style: GoogleFonts.openSans(fontSize:  11,
                     color: Colors.black.withValues(alpha: 0.7),
                   ),
                 ),

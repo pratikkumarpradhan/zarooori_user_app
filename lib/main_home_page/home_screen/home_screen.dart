@@ -113,6 +113,8 @@ class _HomeScreenState extends State<HomeScreen>
     Get.offAll(() => const LoginScreen());
   }
 
+  Offset? _sosPosition;
+
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
@@ -212,6 +214,24 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Widget _buildDashboardContent() {
+    final screenSize = MediaQuery.of(context).size;
+    final padding = MediaQuery.of(context).padding;
+
+    const waveSize = 140.0;
+
+    final usableHeight =
+        screenSize.height -
+        kToolbarHeight // AppBar
+        -
+        padding.top -
+        padding.bottom -
+        90; // bottom nav height (your nav)
+
+    _sosPosition ??= Offset(
+      screenSize.width - waveSize - 10,
+      usableHeight - waveSize - 120,
+    );
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -404,7 +424,30 @@ class _HomeScreenState extends State<HomeScreen>
                     ],
                   ),
                 ),
-                Positioned(right: -5, bottom: 210, child: SosFloatingButton()),
+                Positioned(
+                  left: _sosPosition!.dx,
+                  top: _sosPosition!.dy,
+                  child: GestureDetector(
+                    onPanUpdate: (details) {
+                      setState(() {
+                        double newX = _sosPosition!.dx + details.delta.dx;
+                        double newY = _sosPosition!.dy + details.delta.dy;
+
+                        final minX = 0.0;
+                        final maxX = screenSize.width - waveSize;
+
+                        final minY = 0.0;
+                        final maxY = usableHeight - waveSize;
+
+                        newX = newX.clamp(minX, maxX);
+                        newY = newY.clamp(minY, maxY);
+
+                        _sosPosition = Offset(newX, newY);
+                      });
+                    },
+                    child: const SosFloatingButton(),
+                  ),
+                ),
               ],
             ),
           ),

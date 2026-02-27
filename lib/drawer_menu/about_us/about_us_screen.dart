@@ -251,8 +251,7 @@ class AboutUsScreen extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   'One App. Every Vehicle Need.',
-                  style: AppTextStyles.textView(
-                    size: 12,
+                  style: GoogleFonts.openSans(fontSize:  12,
                     color: AppColors.gray,
                   ).copyWith(fontWeight: FontWeight.w600, letterSpacing: 0.2),
                 ),
