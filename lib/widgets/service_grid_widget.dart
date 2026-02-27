@@ -44,7 +44,7 @@ class ServiceGridWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
               fontSize: 15,
-              fontWeight: FontWeight.bold, // bold premium look
+              fontWeight: FontWeight.w400, // bold premium look
               color: Colors.black,
               letterSpacing: 0.4,
             ),

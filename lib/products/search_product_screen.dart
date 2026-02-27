@@ -663,51 +663,70 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  return Container(
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFFFFD600),
+          Color(0xFFFFEA00),
+          Color(0xFFFFF176),
+          Color(0xFFFFE082),
+        ],
+        stops: [0.0, 0.35, 0.7, 1.0],
+      ),
+    ),
+    child: Scaffold(
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.black),
-          onPressed: () => Get.back(),
-        ),
-        title: Text(widget.screenTitle,
-            style: GoogleFonts.openSans(fontSize: 18, color: AppColors.black).copyWith(fontWeight: FontWeight.w600)),
-        centerTitle: true,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFD600),
-              Color(0xFFFFEA00),
-              Color(0xFFFFF176),
-              Color(0xFFFFE082),
-            ],
-            stops: [0.0, 0.35, 0.7, 1.0],
+         backgroundColor: Colors.transparent,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 8),
+          child: IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
+              padding: const EdgeInsets.all(8),
+            ),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.black,
+              size: 20,
+            ),
+            onPressed: () => Get.back(),
           ),
         ),
-        child: Stack(
-          children: [
-            // Decorative bubbles
-            const Positioned(top: -40, right: -30, child: ProfileBubble(size: 140, color: Color(0xFFFF9800))),
-            const Positioned(top: 140, left: -40, child: ProfileBubble(size: 110, color: Color(0xFFF57C00))),
-            const Positioned(bottom: 200, right: -20, child: ProfileBubble(size: 90, color: Color(0xFFFF9800))),
-            const Positioned(bottom: -60, left: -40, child: ProfileBubble(size: 180, color: Color(0xFFF57C00))),
-            SafeArea(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator(color: AppColors.black))
-                  : SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(18, 10, 18, 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
+        title: Text(
+          widget.screenTitle,
+          style: GoogleFonts.openSans(
+            fontSize: 18,
+            color: AppColors.black,
+          ).copyWith(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+      ),
+      body: Stack(
+        children: [
+          // Decorative bubbles (same as your code)
+          const Positioned(top: -40, right: -30, child: ProfileBubble(size: 140, color: Color(0xFFFF9800))),
+          const Positioned(top: 140, left: -40, child: ProfileBubble(size: 110, color: Color(0xFFF57C00))),
+          const Positioned(bottom: 200, right: -20, child: ProfileBubble(size: 90, color: Color(0xFFFF9800))),
+          const Positioned(bottom: -60, left: -40, child: ProfileBubble(size: 180, color: Color(0xFFF57C00))),
+
+          // 👇 KEEP YOUR EXACT EXISTING SafeArea + Form CODE HERE
+          SafeArea(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator(color: AppColors.black))
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(18, 10, 18, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+
                           Container(
                             decoration: PremiumDecorations.card(),
                             child: Padding(
@@ -876,6 +895,6 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
           ],
         ),
       ),
-    );
-  }
+          );
+}
 }

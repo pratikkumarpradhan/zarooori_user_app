@@ -72,31 +72,48 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
     final req = ProductRequest(
       master_category_id: '4',
       vehicle_category_id: _vehicleCatId,
-      vehicle_company: _brandsList.isNotEmpty && _brandIndex < _brandsList.length
+      vehicle_company:
+          _brandsList.isNotEmpty && _brandIndex < _brandsList.length
           ? _brandsList[_brandIndex].vehicle_brand_id
           : null,
-      vehicle_type: _brandsList.isNotEmpty &&
+      vehicle_type:
+          _brandsList.isNotEmpty &&
               _brandIndex < _brandsList.length &&
               _brandsList[_brandIndex].type_list.isNotEmpty &&
               _typeIndex < _brandsList[_brandIndex].type_list.length
           ? _brandsList[_brandIndex].type_list[_typeIndex].vehicle_type_id
           : null,
-      vehicle_model: _brandsList.isNotEmpty &&
+      vehicle_model:
+          _brandsList.isNotEmpty &&
               _brandIndex < _brandsList.length &&
               _brandsList[_brandIndex].type_list.isNotEmpty &&
               _typeIndex < _brandsList[_brandIndex].type_list.length
-          ? (_brandsList[_brandIndex].type_list[_typeIndex].model_list.isNotEmpty &&
-                  _modelIndex < _brandsList[_brandIndex].type_list[_typeIndex].model_list.length
-              ? _brandsList[_brandIndex].type_list[_typeIndex].model_list[_modelIndex].vehicle_model_id
-              : null)
+          ? (_brandsList[_brandIndex]
+                        .type_list[_typeIndex]
+                        .model_list
+                        .isNotEmpty &&
+                    _modelIndex <
+                        _brandsList[_brandIndex]
+                            .type_list[_typeIndex]
+                            .model_list
+                            .length
+                ? _brandsList[_brandIndex]
+                      .type_list[_typeIndex]
+                      .model_list[_modelIndex]
+                      .vehicle_model_id
+                : null)
           : null,
       vehicle_year: _yearsList.isNotEmpty && _yearIndex < _yearsList.length
           ? _yearsList[_yearIndex].id
           : null,
-      master_subcategory_id: _insuranceTypes.isNotEmpty && _insuranceIndex < _insuranceTypes.length
+      master_subcategory_id:
+          _insuranceTypes.isNotEmpty && _insuranceIndex < _insuranceTypes.length
           ? _insuranceTypes[_insuranceIndex].id
           : null,
-      city_id: _cityList.isNotEmpty && _cityIndex < _cityList.length && _cityList[_cityIndex].id != '0'
+      city_id:
+          _cityList.isNotEmpty &&
+              _cityIndex < _cityList.length &&
+              _cityList[_cityIndex].id != '0'
           ? _cityList[_cityIndex].id ?? '0'
           : '0',
     );
@@ -108,10 +125,9 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
       padding: const EdgeInsets.only(left: 2, bottom: 6),
       child: Text(
         text,
-        style: AppTextStyles.textView13Ssp(color: Colors.black.withOpacity(0.65)).copyWith(
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.2,
-        ),
+        style: AppTextStyles.textView13Ssp(
+          color: Colors.black.withOpacity(0.65),
+        ).copyWith(fontWeight: FontWeight.w600, letterSpacing: 0.2),
       ),
     );
   }
@@ -126,8 +142,12 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: PremiumDecorations.input(fillColor: const Color(0xFFFFF59D).withOpacity(0.5))
-            .copyWith(border: Border.all(color: const Color(0xFFFFD600), width: 2)),
+        decoration:
+            PremiumDecorations.input(
+              fillColor: const Color(0xFFFFF59D).withOpacity(0.5),
+            ).copyWith(
+              border: Border.all(color: const Color(0xFFFFD600), width: 2),
+            ),
         child: Row(
           children: [
             Expanded(
@@ -138,7 +158,11 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                 ).copyWith(fontSize: 14, height: 1.4),
               ),
             ),
-            Icon(Icons.arrow_drop_down_rounded, color: PremiumDecorations.primaryButton, size: 24),
+            Icon(
+              Icons.arrow_drop_down_rounded,
+              color: PremiumDecorations.primaryButton,
+              size: 24,
+            ),
           ],
         ),
       ),
@@ -154,7 +178,8 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
           _stateList = [StateItem(id: '', name: 'All States'), ...list];
         });
       } catch (_) {
-        if (mounted) setState(() => _stateList = [StateItem(id: '', name: 'All States')]);
+        if (mounted)
+          setState(() => _stateList = [StateItem(id: '', name: 'All States')]);
       }
     }
     if (!mounted) return;
@@ -173,7 +198,10 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
               });
             }
           } catch (_) {
-            if (mounted) setState(() => _cityList = [CityItem(id: '0', name: 'All Cities')]);
+            if (mounted)
+              setState(
+                () => _cityList = [CityItem(id: '0', name: 'All Cities')],
+              );
           }
         } else {
           setState(() => _cityList = [CityItem(id: '0', name: 'All Cities')]);
@@ -195,7 +223,10 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
         decoration: BoxDecoration(
           color: PremiumDecorations.cardBackground,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-          border: Border.all(color: PremiumDecorations.cardBorder.withOpacity(0.8), width: 1.5),
+          border: Border.all(
+            color: PremiumDecorations.cardBorder.withOpacity(0.8),
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.12),
@@ -225,10 +256,18 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                     Navigator.pop(ctx);
                   },
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                     decoration: BoxDecoration(
-                      color: i == selected ? const Color(0xFFFFB300).withOpacity(0.2) : Colors.transparent,
+                      color: i == selected
+                          ? const Color(0xFFFFB300).withOpacity(0.2)
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -236,12 +275,17 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                         Expanded(
                           child: Text(
                             items[i],
-                            style: AppTextStyles.textView(
-                              size: 14,
-                              color: i == selected ? const Color(0xFFFFB300) : AppColors.black,
-                            ).copyWith(
-                              fontWeight: i == selected ? FontWeight.w600 : FontWeight.normal,
-                            ),
+                            style:
+                                AppTextStyles.textView(
+                                  size: 14,
+                                  color: i == selected
+                                      ? const Color(0xFFFFB300)
+                                      : AppColors.black,
+                                ).copyWith(
+                                  fontWeight: i == selected
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
+                                ),
                           ),
                         ),
                         if (i == selected)
@@ -264,45 +308,54 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Container(
-          margin: const EdgeInsets.only(left: 8),
-          child: IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
-              padding: const EdgeInsets.all(8),
-            ),
-            icon: const Icon(Icons.arrow_back, color: AppColors.black, size: 20),
-            onPressed: () => Get.back(),
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFFD600),
+            Color(0xFFFFEA00),
+            Color(0xFFFFF176),
+            Color(0xFFFFE082),
+          ],
         ),
-        title: Text(
-          'Search Insurance',
-          style: AppTextStyles.textView(size: 18, color: AppColors.black).copyWith(fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFD600),
-              Color(0xFFFFEA00),
-              Color(0xFFFFF176),
-              Color(0xFFFFE082),
-            ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: Container(
+            margin: const EdgeInsets.only(left: 8),
+            child: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: const Color(0xFFFFF59D).withOpacity(0.9),
+                padding: const EdgeInsets.all(8),
+              ),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: AppColors.black,
+                size: 20,
+              ),
+              onPressed: () => Get.back(),
+            ),
           ),
+          title: Text(
+            'Search Insurance',
+            style: AppTextStyles.textView(
+              size: 18,
+              color: AppColors.black,
+            ).copyWith(fontWeight: FontWeight.w500),
+          ),
+          centerTitle: true,
         ),
-        child: SafeArea(
+        body: SafeArea(
           child: _isLoading
-              ? const Center(child: CircularProgressIndicator(color: AppColors.black))
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColors.black),
+                )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(18),
                   child: Column(
@@ -318,19 +371,26 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                           children: [
                             Text(
                               'Include some details',
-                              style: AppTextStyles.textView(size: 15, color: AppColors.black).copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: AppTextStyles.textView(
+                                size: 15,
+                                color: AppColors.black,
+                              ).copyWith(fontWeight: FontWeight.w700),
                             ),
                             const SizedBox(height: 12),
                             _buildLabel('Select Vehicle Company'),
                             _buildDropdown(
-                              value: _brandsList.isEmpty || _brandIndex >= _brandsList.length
+                              value:
+                                  _brandsList.isEmpty ||
+                                      _brandIndex >= _brandsList.length
                                   ? ''
-                                  : (_brandsList[_brandIndex].vehicle_brand_name ?? ''),
+                                  : (_brandsList[_brandIndex]
+                                            .vehicle_brand_name ??
+                                        ''),
                               hint: 'Select Brand',
                               onTap: () => _showPicker(
-                                items: _brandsList.map((e) => e.vehicle_brand_name ?? '').toList(),
+                                items: _brandsList
+                                    .map((e) => e.vehicle_brand_name ?? '')
+                                    .toList(),
                                 selected: _brandIndex,
                                 onSelect: (i) {
                                   setState(() {
@@ -344,19 +404,33 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                             const SizedBox(height: 12),
                             _buildLabel('Select Type'),
                             _buildDropdown(
-                              value: _brandsList.isEmpty ||
+                              value:
+                                  _brandsList.isEmpty ||
                                       _brandIndex >= _brandsList.length ||
-                                      _brandsList[_brandIndex].type_list.isEmpty ||
-                                      _typeIndex >= _brandsList[_brandIndex].type_list.length
+                                      _brandsList[_brandIndex]
+                                          .type_list
+                                          .isEmpty ||
+                                      _typeIndex >=
+                                          _brandsList[_brandIndex]
+                                              .type_list
+                                              .length
                                   ? ''
-                                  : (_brandsList[_brandIndex].type_list[_typeIndex].vehicle_type_name ?? ''),
+                                  : (_brandsList[_brandIndex]
+                                            .type_list[_typeIndex]
+                                            .vehicle_type_name ??
+                                        ''),
                               hint: 'Select Type',
                               onTap: () {
-                                if (_brandsList.isEmpty || _brandIndex >= _brandsList.length) return;
-                                final types = _brandsList[_brandIndex].type_list;
+                                if (_brandsList.isEmpty ||
+                                    _brandIndex >= _brandsList.length)
+                                  return;
+                                final types =
+                                    _brandsList[_brandIndex].type_list;
                                 if (types.isEmpty) return;
                                 _showPicker(
-                                  items: types.map((e) => e.vehicle_type_name ?? '').toList(),
+                                  items: types
+                                      .map((e) => e.vehicle_type_name ?? '')
+                                      .toList(),
                                   selected: _typeIndex,
                                   onSelect: (i) {
                                     setState(() {
@@ -370,31 +444,53 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                             const SizedBox(height: 12),
                             _buildLabel('Select Model'),
                             _buildDropdown(
-                              value: _brandsList.isEmpty ||
+                              value:
+                                  _brandsList.isEmpty ||
                                       _brandIndex >= _brandsList.length ||
-                                      _brandsList[_brandIndex].type_list.isEmpty ||
-                                      _typeIndex >= _brandsList[_brandIndex].type_list.length
+                                      _brandsList[_brandIndex]
+                                          .type_list
+                                          .isEmpty ||
+                                      _typeIndex >=
+                                          _brandsList[_brandIndex]
+                                              .type_list
+                                              .length
                                   ? ''
                                   : () {
-                                      final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
-                                      return models.isEmpty || _modelIndex >= models.length
+                                      final models = _brandsList[_brandIndex]
+                                          .type_list[_typeIndex]
+                                          .model_list;
+                                      return models.isEmpty ||
+                                              _modelIndex >= models.length
                                           ? ''
-                                          : (models[_modelIndex].vehicle_model_name ?? '');
+                                          : (models[_modelIndex]
+                                                    .vehicle_model_name ??
+                                                '');
                                     }(),
                               hint: 'Select Model',
                               onTap: () {
                                 if (_brandsList.isEmpty ||
                                     _brandIndex >= _brandsList.length ||
-                                    _brandsList[_brandIndex].type_list.isEmpty ||
-                                    _typeIndex >= _brandsList[_brandIndex].type_list.length) return;
+                                    _brandsList[_brandIndex]
+                                        .type_list
+                                        .isEmpty ||
+                                    _typeIndex >=
+                                        _brandsList[_brandIndex]
+                                            .type_list
+                                            .length)
+                                  return;
 
-                                final models = _brandsList[_brandIndex].type_list[_typeIndex].model_list;
+                                final models = _brandsList[_brandIndex]
+                                    .type_list[_typeIndex]
+                                    .model_list;
                                 if (models.isEmpty) return;
 
                                 _showPicker(
-                                  items: models.map((e) => e.vehicle_model_name ?? '').toList(),
+                                  items: models
+                                      .map((e) => e.vehicle_model_name ?? '')
+                                      .toList(),
                                   selected: _modelIndex,
-                                  onSelect: (i) => setState(() => _modelIndex = i),
+                                  onSelect: (i) =>
+                                      setState(() => _modelIndex = i),
                                 );
                               },
                             ),
@@ -403,18 +499,25 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       _buildLabel('Select Year'),
                                       _buildDropdown(
-                                        value: _yearsList.isEmpty || _yearIndex >= _yearsList.length
+                                        value:
+                                            _yearsList.isEmpty ||
+                                                _yearIndex >= _yearsList.length
                                             ? ''
-                                            : (_yearsList[_yearIndex].year ?? ''),
+                                            : (_yearsList[_yearIndex].year ??
+                                                  ''),
                                         hint: 'Select Year',
                                         onTap: () => _showPicker(
-                                          items: _yearsList.map((e) => e.year ?? '').toList(),
+                                          items: _yearsList
+                                              .map((e) => e.year ?? '')
+                                              .toList(),
                                           selected: _yearIndex,
-                                          onSelect: (i) => setState(() => _yearIndex = i),
+                                          onSelect: (i) =>
+                                              setState(() => _yearIndex = i),
                                         ),
                                       ),
                                     ],
@@ -423,18 +526,28 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       _buildLabel('Type of Insurance'),
                                       _buildDropdown(
-                                        value: _insuranceTypes.isEmpty || _insuranceIndex >= _insuranceTypes.length
+                                        value:
+                                            _insuranceTypes.isEmpty ||
+                                                _insuranceIndex >=
+                                                    _insuranceTypes.length
                                             ? ''
-                                            : (_insuranceTypes[_insuranceIndex].sub_cat_name ?? ''),
+                                            : (_insuranceTypes[_insuranceIndex]
+                                                      .sub_cat_name ??
+                                                  ''),
                                         hint: 'Select Insurance Type',
                                         onTap: () => _showPicker(
-                                          items: _insuranceTypes.map((e) => e.sub_cat_name ?? '').toList(),
+                                          items: _insuranceTypes
+                                              .map((e) => e.sub_cat_name ?? '')
+                                              .toList(),
                                           selected: _insuranceIndex,
-                                          onSelect: (i) => setState(() => _insuranceIndex = i),
+                                          onSelect: (i) => setState(
+                                            () => _insuranceIndex = i,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -445,7 +558,9 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                             const SizedBox(height: 12),
                             _buildLabel('State'),
                             _buildDropdown(
-                              value: _stateList.isEmpty || _stateIndex >= _stateList.length
+                              value:
+                                  _stateList.isEmpty ||
+                                      _stateIndex >= _stateList.length
                                   ? 'All States'
                                   : (_stateList[_stateIndex].name ?? ''),
                               hint: 'All States',
@@ -454,16 +569,21 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                             const SizedBox(height: 12),
                             _buildLabel('City'),
                             _buildDropdown(
-                              value: _cityList.isEmpty || _cityIndex >= _cityList.length
+                              value:
+                                  _cityList.isEmpty ||
+                                      _cityIndex >= _cityList.length
                                   ? 'All Cities'
                                   : (_cityList[_cityIndex].name ?? ''),
                               hint: 'All Cities',
                               onTap: () {
                                 if (_cityList.isEmpty) return;
                                 _showPicker(
-                                  items: _cityList.map((e) => e.name ?? '').toList(),
+                                  items: _cityList
+                                      .map((e) => e.name ?? '')
+                                      .toList(),
                                   selected: _cityIndex,
-                                  onSelect: (i) => setState(() => _cityIndex = i),
+                                  onSelect: (i) =>
+                                      setState(() => _cityIndex = i),
                                 );
                               },
                             ),
@@ -475,8 +595,10 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
                                 style: PremiumDecorations.primaryButtonStyle,
                                 child: Text(
                                   'Search',
-                                  style: AppTextStyles.textView(size: 16, color: AppColors.black)
-                                      .copyWith(fontWeight: FontWeight.w600),
+                                  style: AppTextStyles.textView(
+                                    size: 16,
+                                    color: AppColors.black,
+                                  ).copyWith(fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
