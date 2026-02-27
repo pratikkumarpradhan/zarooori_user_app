@@ -19,6 +19,8 @@ class DrawerMenuWidget extends StatelessWidget {
   final VoidCallback onFaq;
   final VoidCallback onTrustedContacts;
   final VoidCallback onLogout;
+  final VoidCallback onDealer;
+
 
   const DrawerMenuWidget({
     super.key,
@@ -37,6 +39,8 @@ class DrawerMenuWidget extends StatelessWidget {
     required this.onFaq,
     required this.onTrustedContacts,
     required this.onLogout,
+    required this.onDealer,
+
   });
 
   @override
@@ -137,6 +141,8 @@ class DrawerMenuWidget extends StatelessWidget {
                               _buildMenuItem(context, Icons.contact_mail, 'Contact Us', onContactUs),
                               _buildMenuItem(context, Icons.description, 'Terms and Condition', onTerms),
                               _buildMenuItem(context, Icons.privacy_tip, 'Privacy Policy', onPrivacy),
+                              _buildMenuItem(context, Icons.app_registration, 'Upgrade to Dealer', onDealer),
+
                               const SizedBox(height: 8),
                               _buildSectionTitle('Support'),
                               _buildMenuItem(context, Icons.help, 'Help Center', onHelp),

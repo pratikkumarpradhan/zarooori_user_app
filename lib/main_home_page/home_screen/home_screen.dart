@@ -12,6 +12,7 @@ import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
 import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
 import 'package:zarooori_user/drawer_menu/about_us/about_us_screen.dart';
 import 'package:zarooori_user/drawer_menu/bookings_list/bookings_list_screen.dart';
+import 'package:zarooori_user/drawer_menu/dealer/dealer_screen.dart';
 import 'package:zarooori_user/drawer_menu/rfq/add_rfq_screen.dart';
 import 'package:zarooori_user/drawer_menu/orders/orders_list_screen.dart';
 import 'package:zarooori_user/drawer_menu/page_detail_screen.dart';
@@ -177,6 +178,8 @@ class _HomeScreenState extends State<HomeScreen>
           onContactUs: () => Get.to(() => const PageDetailScreen(pageNo: '2')),
           onTerms: () => Get.to(() => const PageDetailScreen(pageNo: '4')),
           onPrivacy: () => Get.to(() => const PageDetailScreen(pageNo: '3')),
+          onDealer: () => Get.to(() => const DealerDemoScreen()),
+
           onHelp: () => Get.to(
             () => const WebViewScreen(
               url: 'https://aswack.com/help.php',
@@ -509,7 +512,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildBottomNav() {
     return Container(
-      margin: const EdgeInsets.all(8), // space to show full outline
+      margin: const EdgeInsets.all(6), // space to show full outline
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
 
@@ -528,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: Container(
-          height: 80,
+          height: 75,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -536,7 +539,7 @@ class _HomeScreenState extends State<HomeScreen>
               colors: [Color(0xFFFFEB3B), Color(0xFFFFF59D)],
             ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

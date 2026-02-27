@@ -119,7 +119,7 @@ class _SearchVehicleListScreenState extends State<SearchVehicleListScreen> {
           ),
         ),
         title: Text(
-          'Search results of vehicles',
+          'Vehicles List',
           style: GoogleFonts.openSans(
             fontSize: 18,
             color: AppColors.black,
@@ -182,7 +182,7 @@ class _SearchVehicleListScreenState extends State<SearchVehicleListScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 child: Column(
                   children: [
-                    const SizedBox(height: 60),
+                    //const SizedBox(height: 60),
                     if (!_isLoading && _errorMsg == null) ...[
                       _buildSearchField(),
                       const SizedBox(height: 12),
