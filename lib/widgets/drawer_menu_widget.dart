@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zarooori_user/decorative_ui/app_colours.dart';
-import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
   final VoidCallback onProfile;
