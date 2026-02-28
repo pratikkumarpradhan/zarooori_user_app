@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:zarooori_user/api_services/buy_vehicle_api.dart';
 import 'package:zarooori_user/api_services/vehicle_insurance_api.dart';
 import 'package:zarooori_user/book_appointment/book_appointment_screen.dart';
 import 'package:zarooori_user/company/company_detail_screen.dart';
-import 'package:zarooori_user/decorative_ui/app_colours.dart';
 import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
 import 'package:zarooori_user/drawer_menu/profile/profile_bubble_screen.dart';
 import 'package:zarooori_user/models/buy_vehicle_model.dart';
@@ -180,9 +180,9 @@ class _GarageListScreenState extends State<GarageListScreen> {
             onPressed: () => Get.back(),
           ),
         ),
-        title: const Text(
+        title: Text(
           'Garages',
-          style: TextStyle(
+          style: GoogleFonts.openSans(
               fontSize: 18,
               color: Colors.black,
               fontWeight: FontWeight.w600),
