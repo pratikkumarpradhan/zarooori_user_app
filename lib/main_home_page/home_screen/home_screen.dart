@@ -555,6 +555,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildBottomNav() {
     return Container(
+//color: Colors.transparent,
       margin: const EdgeInsets.all(6), // space to show full outline
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -574,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: Container(
-          height: 75,
+          height: 60,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -582,7 +583,7 @@ class _HomeScreenState extends State<HomeScreen>
               colors: [Color(0xFFFFEB3B), Color(0xFFFFF59D)],
             ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

@@ -6,11 +6,10 @@ import 'package:zarooori_user/api_services/vehicle_insurance_api.dart';
 import 'package:zarooori_user/book_appointment/book_appointment_screen.dart';
 import 'package:zarooori_user/company/company_detail_screen.dart';
 import 'package:zarooori_user/decorative_ui/app_colours.dart';
-import 'package:zarooori_user/decorative_ui/app_textstyle.dart';
+import 'package:zarooori_user/decorative_ui/premium_decoration.dart';
+import 'package:zarooori_user/drawer_menu/profile/profile_bubble_screen.dart';
 import 'package:zarooori_user/models/buy_vehicle_model.dart';
 import 'package:zarooori_user/models/product_model.dart';
-
-
 
 class GarageListScreen extends StatefulWidget {
   final ProductRequest productRequest;
@@ -26,9 +25,12 @@ class _GarageListScreenState extends State<GarageListScreen> {
   String? _errorMsg;
   List<CompanyDetails> _companies = [];
   List<CompanyDetails> _filtered = [];
+
   final TextEditingController _searchController = TextEditingController();
+
   int _stateIndex = 0;
   int _cityIndex = 0;
+
   List<StateItem> _stateList = [StateItem(id: '', name: 'All States')];
   List<CityItem> _cityList = [CityItem(id: '0', name: 'All Cities')];
 
@@ -42,7 +44,6 @@ class _GarageListScreenState extends State<GarageListScreen> {
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     super.dispose();
   }
@@ -55,9 +56,7 @@ class _GarageListScreenState extends State<GarageListScreen> {
           _stateList = [StateItem(id: '', name: 'All States'), ...list];
         });
       }
-    } catch (_) {
-      if (mounted) setState(() => _stateList = [StateItem(id: '', name: 'All States')]);
-    }
+    } catch (_) {}
   }
 
   Future<void> _onStateChanged(int index) async {
@@ -66,18 +65,20 @@ class _GarageListScreenState extends State<GarageListScreen> {
       _cityIndex = 0;
       _cityList = [CityItem(id: '0', name: 'All Cities')];
     });
-    if (index > 0 && _stateList[index].id != null && _stateList[index].id!.isNotEmpty) {
+
+    if (index > 0 && _stateList[index].id!.isNotEmpty) {
       try {
-        final cities = await BuyVehicleApi.getCityList(_stateList[index].id!);
+        final cities =
+            await BuyVehicleApi.getCityList(_stateList[index].id!);
         if (mounted) {
           setState(() {
-            _cityList = [CityItem(id: '0', name: 'All Cities'), ...cities];
+            _cityList =
+                [CityItem(id: '0', name: 'All Cities'), ...cities];
           });
         }
-      } catch (_) {
-        if (mounted) setState(() => _cityList = [CityItem(id: '0', name: 'All Cities')]);
-      }
+      } catch (_) {}
     }
+
     _loadCompanies();
   }
 
@@ -87,21 +88,27 @@ class _GarageListScreenState extends State<GarageListScreen> {
   }
 
   Future<void> _loadCompanies() async {
-    final cityId = _cityList.isEmpty || _cityIndex >= _cityList.length
-        ? '0'
-        : (_cityList[_cityIndex].id ?? '0');
+    final cityId = _cityList[_cityIndex].id ?? '0';
+
     setState(() {
       _isLoading = true;
       _errorMsg = null;
     });
+
     try {
       final req = ProductRequest(
-        master_category_id: widget.productRequest.master_category_id ?? '3',
-        master_subcategory_id: widget.productRequest.master_subcategory_id,
+        master_category_id:
+            widget.productRequest.master_category_id ?? '3',
+        master_subcategory_id:
+            widget.productRequest.master_subcategory_id,
         city_id: cityId,
       );
-      final list = await VehicleInsuranceApi.getCompanyList(req);
+
+      final list =
+          await VehicleInsuranceApi.getCompanyList(req);
+
       if (!mounted) return;
+
       setState(() {
         _companies = list;
         _filtered = List.from(list);
@@ -110,38 +117,38 @@ class _GarageListScreenState extends State<GarageListScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMsg = e.toString().replaceAll('Exception: ', '');
+          _errorMsg =
+              e.toString().replaceAll('Exception: ', '');
           _isLoading = false;
         });
-        Get.snackbar('Error', _errorMsg!);
       }
     }
   }
 
   void _onSearchChanged() {
     final q = _searchController.text.trim().toLowerCase();
+
     if (q.isEmpty) {
       setState(() => _filtered = List.from(_companies));
     } else {
       setState(() {
-        _filtered = _companies.where((c) => _matchesSearch(c, q)).toList();
+        _filtered = _companies.where((c) {
+          final name = (c.company_name ?? '').toLowerCase();
+          final owner = (c.owner_name ?? '').toLowerCase();
+          final phone = (c.contactNumber ?? '').toLowerCase();
+          return name.contains(q) ||
+              owner.contains(q) ||
+              phone.contains(q);
+        }).toList();
       });
     }
-  }
-
-  bool _matchesSearch(CompanyDetails c, String q) {
-    final name = (c.company_name ?? '').toLowerCase();
-    final mobile = (c.company_mobile ?? c.company_alt_mobile ?? c.company_phone ?? '').toLowerCase();
-    final email = (c.company_email_id ?? '').toLowerCase();
-    final owner = (c.owner_name ?? '').toLowerCase();
-    final website = (c.company_website ?? '').toLowerCase();
-    return name.contains(q) || mobile.contains(q) || email.contains(q) || owner.contains(q) || website.contains(q);
   }
 
   void _onCompanyTap(CompanyDetails company) {
     Get.to(() => CompanyDetailScreen(
           companyId: company.id ?? '',
-          mainCatId: widget.productRequest.master_category_id ?? '3',
+          mainCatId:
+              widget.productRequest.master_category_id ?? '3',
         ));
   }
 
@@ -156,244 +163,298 @@ class _GarageListScreenState extends State<GarageListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.purple700,
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: AppColors.purple700,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.black),
-          onPressed: () => Get.back(),
+        backgroundColor: Colors.transparent,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 8),
+          child: IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor:
+                  const Color(0xFFFFF59D).withOpacity(0.9),
+            ),
+            icon: const Icon(Icons.arrow_back,
+                color: Colors.black),
+            onPressed: () => Get.back(),
+          ),
         ),
-        title: Text(
+        title: const Text(
           'Garages',
-          style: AppTextStyles.textView(size: 18, color: AppColors.black),
+          style: TextStyle(
+              fontSize: 18,
+              color: Colors.black,
+              fontWeight: FontWeight.w600),
         ),
+        centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search by name, mobile, email',
-                prefixIcon: const Icon(Icons.search),
-                filled: true,
-                fillColor: AppColors.white,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFFFD600),
+              Color(0xFFFFEA00),
+              Color(0xFFFFF176),
+              Color(0xFFFFE082),
+            ],
+            stops: [0.0, 0.35, 0.7, 1.0],
+          ),
+        ),
+        child: Stack(
+          children: [
+            const Positioned(
+              top: -40,
+              right: -30,
+              child: ProfileBubble(
+                  size: 140, color: Color(0xFFFF9800)),
+            ),
+            const Positioned(
+              top: 140,
+              left: -40,
+              child: ProfileBubble(
+                  size: 110, color: Color(0xFFF57C00)),
+            ),
+            const Positioned(
+              bottom: -60,
+              left: -40,
+              child: ProfileBubble(
+                  size: 180, color: Color(0xFFF57C00)),
+            ),
+            SafeArea(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  _buildSearchSection(),
+                  const SizedBox(height: 16),
+                  Expanded(child: _buildContent()),
+                ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _buildDropdown(
-                    value: _stateList.isEmpty || _stateIndex >= _stateList.length
-                        ? 'All States'
-                        : (_stateList[_stateIndex].name ?? 'All States'),
-                    onTap: () => _showStatePicker(),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildDropdown(
-                    value: _cityList.isEmpty || _cityIndex >= _cityList.length
-                        ? 'All Cities'
-                        : (_cityList[_cityIndex].name ?? 'All Cities'),
-                    onTap: () => _showCityPicker(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator(color: AppColors.black))
-                : _errorMsg != null && _companies.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(_errorMsg!, textAlign: TextAlign.center, style: AppTextStyles.textView(size: 14, color: AppColors.black)),
-                            const SizedBox(height: 16),
-                            ElevatedButton(onPressed: _loadCompanies, child: const Text('Retry')),
-                          ],
-                        ),
-                      )
-                    : _filtered.isEmpty
-                        ? Center(
-                            child: Text(
-                              'No garages found',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.textView(size: 14, color: AppColors.black),
-                            ),
-                          )
-                        : _buildList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDropdown({required String value, required VoidCallback onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Expanded(child: Text(value, style: AppTextStyles.textView(size: 12, color: AppColors.black), overflow: TextOverflow.ellipsis)),
-            const Icon(Icons.arrow_drop_down, color: AppColors.black),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildSearchSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        decoration: PremiumDecorations.card().copyWith(
+          border: Border.all(color: Colors.black87, width: 2),
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.fromLTRB(20, 16, 20, 20),
+          child: Column(
+            children: [
+              TextField(
+                controller: _searchController,
+                decoration:
+                    PremiumDecorations.textField(
+                  hintText:
+                      'Search by name, owner, phone',
+                  prefixIcon: const Icon(
+                      Icons.search_rounded),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildDropdown(
+                      _stateList[_stateIndex].name ??
+                          'All States',
+                      _showStatePicker,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _buildDropdown(
+                      _cityList[_cityIndex].name ??
+                          'All Cities',
+                      _showCityPicker,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDropdown(
+      String value, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 16, vertical: 14),
+        decoration: PremiumDecorations.input(
+          fillColor:
+              const Color(0xFFFFF59D).withOpacity(0.5),
+        ).copyWith(
+          border: Border.all(
+              color: const Color(0xFFFFD600), width: 2),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(value,
+                  overflow: TextOverflow.ellipsis),
+            ),
+            const Icon(Icons.arrow_drop_down_rounded),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    if (_isLoading) {
+      return const Center(
+          child: CircularProgressIndicator(
+              color: Colors.black));
+    }
+
+    if (_filtered.isEmpty) {
+      return const Center(
+        child: Text("No garages found",
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600)),
+      );
+    }
+
+    return ListView.builder(
+      padding:
+          const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      itemCount: _filtered.length,
+      itemBuilder: (_, i) {
+        final company = _filtered[i];
+
+        final imageUrl = company.image != null &&
+                company.image!.isNotEmpty
+            ? resolveImageUrl(company.image!)
+            : null;
+
+        return Container(
+          margin:
+              const EdgeInsets.only(bottom: 12),
+          decoration:
+              PremiumDecorations.card().copyWith(
+            border: Border.all(
+                color: Colors.black87, width: 2),
+            color: Colors.white,
+          ),
+          child: InkWell(
+            borderRadius:
+                BorderRadius.circular(24),
+            onTap: () =>
+                _onCompanyTap(company),
+            child: Padding(
+              padding:
+                  const EdgeInsets.all(18),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(16),
+                    child: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: imageUrl != null
+                          ? CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/placeholder.png',
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: 18),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          company.company_name ??
+                              "-",
+                          style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight:
+                                  FontWeight.w700),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          company.owner_name ??
+                              "",
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey),
+                        ),
+                        const SizedBox(height: 14),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                _onBookAppointment(
+                                    company),
+                            style: PremiumDecorations
+                                .primaryButtonStyle,
+                            child: const Text(
+                                "Book Appointment"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _showStatePicker() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => SizedBox(
-        height: 300,
-        child: ListView.builder(
-          itemCount: _stateList.length,
-          itemBuilder: (_, i) => ListTile(
-            title: Text(_stateList[i].name ?? ''),
-            selected: i == _stateIndex,
-            onTap: () {
-              _onStateChanged(i);
-              Navigator.pop(ctx);
-            },
-          ),
+      builder: (ctx) => ListView.builder(
+        itemCount: _stateList.length,
+        itemBuilder: (_, i) => ListTile(
+          title: Text(
+              _stateList[i].name ?? ''),
+          onTap: () {
+            _onStateChanged(i);
+            Navigator.pop(ctx);
+          },
         ),
       ),
     );
   }
 
   void _showCityPicker() {
-    if (_cityList.isEmpty) return;
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => SizedBox(
-        height: 300,
-        child: ListView.builder(
-          itemCount: _cityList.length,
-          itemBuilder: (_, i) => ListTile(
-            title: Text(_cityList[i].name ?? ''),
-            selected: i == _cityIndex,
-            onTap: () {
-              _onCityChanged(i);
-              Navigator.pop(ctx);
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildList() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: _filtered.length,
-      itemBuilder: (_, i) => _CompanyCard(
-        company: _filtered[i],
-        onTap: () => _onCompanyTap(_filtered[i]),
-        onBookAppointment: () => _onBookAppointment(_filtered[i]),
-      ),
-    );
-  }
-}
-
-class _CompanyCard extends StatelessWidget {
-  final CompanyDetails company;
-  final VoidCallback onTap;
-  final VoidCallback onBookAppointment;
-
-  const _CompanyCard({
-    required this.company,
-    required this.onTap,
-    required this.onBookAppointment,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final imageUrl = company.image != null && company.image!.isNotEmpty ? resolveImageUrl(company.image!) : null;
-    return Card(
-      color: AppColors.white,
-      margin: const EdgeInsets.only(bottom: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: SizedBox(
-                  width: 70,
-                  height: 70,
-                  child: imageUrl != null
-                      ? CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (c, u) => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-                          errorWidget: (c, u, e) => Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
-                        )
-                      : Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      company.company_name ?? '-',
-                      style: AppTextStyles.semibold14(color: AppColors.black),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (company.owner_name != null && company.owner_name!.isNotEmpty)
-                      Text(
-                        'Owner: ${company.owner_name}',
-                        style: AppTextStyles.textView(size: 12, color: AppColors.gray),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    if (company.contactNumber != null && company.contactNumber!.isNotEmpty)
-                      Text(
-                        company.contactNumber!,
-                        style: AppTextStyles.textView(size: 12, color: AppColors.gray),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: onBookAppointment,
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColors.orange,
-                          foregroundColor: AppColors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                        ),
-                        child: const Text('Book Appointment'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+      builder: (ctx) => ListView.builder(
+        itemCount: _cityList.length,
+        itemBuilder: (_, i) => ListTile(
+          title:
+              Text(_cityList[i].name ?? ''),
+          onTap: () {
+            _onCityChanged(i);
+            Navigator.pop(ctx);
+          },
         ),
       ),
     );
