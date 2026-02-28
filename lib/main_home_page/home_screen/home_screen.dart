@@ -15,13 +15,13 @@ import 'package:zarooori_user/drawer_menu/bookings_list/bookings_list_screen.dar
 import 'package:zarooori_user/drawer_menu/dealer/dealer_screen.dart';
 import 'package:zarooori_user/drawer_menu/faqs/faqs_screen.dart';
 import 'package:zarooori_user/drawer_menu/help_center/help_center_screen.dart';
-import 'package:zarooori_user/drawer_menu/rfq/add_rfq_screen.dart';
 import 'package:zarooori_user/drawer_menu/orders/orders_list_screen.dart';
 import 'package:zarooori_user/drawer_menu/page_detail_screen.dart';
 import 'package:zarooori_user/drawer_menu/profile/profile_bubble_screen.dart';
 import 'package:zarooori_user/drawer_menu/profile/profile_screen.dart';
 import 'package:zarooori_user/drawer_menu/purchased_packages/purchased_packages_screen.dart';
 import 'package:zarooori_user/drawer_menu/reminders/reminders_list_screen.dart';
+import 'package:zarooori_user/drawer_menu/rfq/add_rfq_screen.dart';
 import 'package:zarooori_user/drawer_menu/wish_list/wish_list_screen.dart';
 import 'package:zarooori_user/main_home_page/chat_list/chat_list_screen.dart';
 import 'package:zarooori_user/main_home_page/offers/offers_screen.dart';
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
             await Get.to(() => const ProfileScreen());
             if (mounted) _loadUserData();
           },
-          onRFQ: () => Get.to(() => const AddRFQScreen()),
+         onRFQ: () => Get.to(() => const AddRFQScreen()),
           onWishList: () => Get.to(() => const WishListScreen()),
           onBooking: () => Get.to(() => const BookingListScreen()),
           onPackageList: () => Get.to(() => const PurchasedPackagesScreen()),

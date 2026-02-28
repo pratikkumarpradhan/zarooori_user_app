@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:zarooori_user/api_services/buy_vehicle_api.dart';
 import 'package:zarooori_user/api_services/vehicle_insurance_api.dart';
 import 'package:zarooori_user/decorative_ui/app_colours.dart';
@@ -344,10 +345,10 @@ class _SearchInsuranceScreenState extends State<SearchInsuranceScreen> {
           ),
           title: Text(
             'Search Insurance',
-            style: AppTextStyles.textView(
-              size: 18,
+            style: GoogleFonts.openSans(
+              fontSize: 18,
               color: AppColors.black,
-            ).copyWith(fontWeight: FontWeight.w500),
+            ).copyWith(fontWeight: FontWeight.w600),
           ),
           centerTitle: true,
         ),

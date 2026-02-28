@@ -100,7 +100,7 @@ class _FaqsScreenState extends State<FaqsScreen> {
                       // sectionTitle: 'Privacy Policy',
                       children: [
                         _buildBulletItem(
-                          'How to Change my Photo from Admin Dashboard?',
+                          'How to Change my Photo from Admin Dashboard ?',
                         ),
                         _buildParagraph(
                           'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
@@ -111,7 +111,7 @@ class _FaqsScreenState extends State<FaqsScreen> {
                     _buildSectionCard(
                       // sectionTitle: 'Information We Collect',
                       children: [
-                        _buildBulletItem('How to Change my Password easily?'),
+                        _buildBulletItem('How to Change my Password easily ?'),
                         _buildParagraph(
                           'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
                         ),
@@ -122,7 +122,7 @@ class _FaqsScreenState extends State<FaqsScreen> {
                       // sectionTitle: 'How We Use Your Information',
                       children: [
                         _buildBulletItem(
-                          'How to Change my Subscription Plan using PayPal',
+                          'How to Change my Subscription Plan using PayPal ?',
                         ),
                         _buildParagraph(
                           'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
